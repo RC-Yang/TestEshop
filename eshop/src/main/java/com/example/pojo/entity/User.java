@@ -2,28 +2,39 @@ package com.example.pojo.entity;
 
 import java.util.Date;
 
+import javax.persistence.*;
+
 /**
  * 使用者實體類別，用來封裝使用者資料。
  * 若透過 JPA 注解方式來配置，則無需再額外配置 hbm.xml 文件。
  */
+@Entity
+@Table(name="user")
 public class User {
 
     // 使用者的唯一識別碼
+	@Id
+	@Column(name="id")
     private String id;
 
     // 使用者名稱
+	@Column(name="name")
     private String name;
 
     // 使用者登入帳號
+	@Column(name="login_id")
     private String loginId;
 
     // 使用者密碼
+	@Column(name="password")
     private String password;
 
     // 使用者電話號碼
+	@Column(name="tel")
     private String tel;
 
     // 使用者註冊日期
+	@Column(name="create_date")
     private Date createDate;
 
     // 取得使用者的 ID

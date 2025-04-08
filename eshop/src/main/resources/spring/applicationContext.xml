@@ -58,6 +58,9 @@
 		<property name="mappingLocations">
 			<value>classpath:com/example/pojo/hbm/*.hbm.xml</value>
 		</property>
+		
+		<property name="packagesToScan" value="com.example.pojo.entity" />
+		
 		<!-- Hibernate 相關屬性設定 -->
 		<property name="hibernateProperties">
 			<props>
