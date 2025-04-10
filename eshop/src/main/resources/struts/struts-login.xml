@@ -45,5 +45,6 @@
             -->
             <result name="success" type="redirect">/home/index</result>
         </action>
+         
     </package>
 </struts>

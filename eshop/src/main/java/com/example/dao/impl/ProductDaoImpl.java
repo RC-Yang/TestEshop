@@ -4,19 +4,21 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.example.dao.ProductDao;
 import com.example.pojo.entity.Product;
 
+@Repository
 public class ProductDaoImpl implements ProductDao{
 	@Autowired
 	SessionFactory sessionFactory;
 	
 	@Override
-	public List<Product> queryAllProduct() {
-		String hql = "FROM Product";
-		List<Product> products = sessionFactory.getCurrentSession().createQuery(hql, Product.class)
-								.getResultList();
+	public List<Object[]> queryAllProduct() {
+		String hql = "select p.prodId,p.prodName,p.prodPrice FROM Product p";
+		List<Object[]> products = sessionFactory.getCurrentSession().createQuery(hql)
+							.getResultList();
 		return products;
 	}
 

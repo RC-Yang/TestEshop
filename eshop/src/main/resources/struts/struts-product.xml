@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="product" extends="default" namespace="/product">
+		<action name="productList" 
+	            class="com.example.action.ProductAction" 
+	            method="goToProductPage">
+	        
+	        <result name="success">/WEB-INF/views/product/product_list.jsp</result>
+	    </action>  
+    </package>
+</struts>
