@@ -30,6 +30,7 @@
 	            <th>編號</th>
 	            <th>商品名稱</th>
 	            <th>價格</th>
+	            <th style="width: 10%;"></th>
 	        </tr>
 	        </thead>
 	        <tbody>
@@ -38,6 +39,10 @@
 	                <td><s:property value="#product[0]"/></td>
 	                <td><s:property value="#product[1]"/></td>
 	                <td><s:property value="#product[2]"/></td>
+	                <td class="d-flex justify-content-center align-items-center">
+		        		<a href="<%= request.getContextPath() %>/product/productDetail?prodId=<s:property value="#product[0]"/>" 
+		        		class="btn btn-primary" role="button">購買商品</a>
+		        	</td>
 	            </tr>
 	        </s:iterator>
 	        </tbody>

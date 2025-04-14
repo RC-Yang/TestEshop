@@ -20,4 +20,7 @@ public class ProductServiceImpl implements ProductService{
 		return productDao.queryAllProduct();
 	}
 
+	public Object[] queryProductById(Integer id) {
+		return productDao.queryProductById(id);
+	}
 }

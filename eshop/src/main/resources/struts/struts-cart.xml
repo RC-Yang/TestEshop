@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="cart" extends="json-default" namespace="/cart">
+		<action name="addToCart" 
+	            class="com.example.action.CartAction" 
+	            method="addToCart">
+	        
+	        <result name="success" type="json"/>
+	    </action>
+	    
+	    <action name="queryCart" 
+	            class="com.example.action.CartAction" 
+	            method="queryCart">
+	        
+	        <result name="success">/WEB-INF/views/cart/cart_list.jsp</result>
+	    </action>
+    </package>
+</struts>

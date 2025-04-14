@@ -9,6 +9,12 @@
 	            method="goToProductPage">
 	        
 	        <result name="success">/WEB-INF/views/product/product_list.jsp</result>
-	    </action>  
+	    </action>
+	    <action name="productDetail" 
+	            class="com.example.action.ProductAction" 
+	            method="queryProductDetail">
+	        
+	        <result name="success">/WEB-INF/views/product/product_buy.jsp</result>
+	    </action>
     </package>
 </struts>

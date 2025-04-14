@@ -23,10 +23,10 @@ public class ProductDaoImpl implements ProductDao{
 	}
 
 	@Override
-	public Product queryProductById(Integer id) {
-		String hql = "FROM Product p where p.prodId=:id";
-		Product product = sessionFactory.getCurrentSession().createQuery(hql, Product.class)
-							.setParameter("id", id).uniqueResult();
+	public Object[] queryProductById(Integer id) {
+		String hql = "select p.prodType.prodType,p.prodLine.prodLine,p.prodName,p.prodPrice,p.prodId FROM Product p where p.prodId=:id";
+		Object[] product = (Object[])sessionFactory.getCurrentSession().createQuery(hql)
+							.setParameter("id", id).getResultList().get(0);
 		return product;
 	}
 
