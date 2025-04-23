@@ -29,6 +29,7 @@
     <h2 class="my-2">購物車清單</h2>
 
 	<div class="w-75 mx-auto">
+	 	<form action="<%= request.getContextPath() %>/purchase/goToPurchase" method="post" id="purchaseForm">
 		<table id="myTable" class="table table-striped table-bordered">
 		  <thead class="table-primary">
 		    <tr>
@@ -38,15 +39,37 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-			  <s:iterator value="cartList" var="cart">
-			    <tr>
-			      <td><s:property value="#cart[0]" /></td>
-			      <td><s:property value="#cart[1]" /></td>
-			      <td><s:property value="#cart[2]" /></td>
-			    </tr>
-			  </s:iterator>
+		  	 
+		  	  		<% int index = 0; %>
+				  <s:iterator value="cartList" var="cart" status="i">
+				    <tr>
+				      
+					      <td><s:property value="#cart[0]" /></td>
+					      <td><s:property value="#cart[1]" /></td>
+					      <td>
+					      	<input type="hidden" name='<%="cartItem[" + index + "].prodId" %>'
+					      	 value="<s:property value="#cart[3]" />" />
+					      	<select class="form-select" name='<%="cartItem[" + index + "].quantity" %>'>
+					      		<s:iterator begin="1" end="%{#cart[2]}" var="j">
+								    <option value="<s:property value='#j' />"
+								      <s:if test="#j == 1">selected</s:if>>
+								      <s:property value="#j" />
+								    </option>
+							  </s:iterator>
+					      	</select>
+					      </td>
+				    </tr>
+				  </s:iterator>
+			  
 		  </tbody>
 		</table>
+		</form>
+	</div>
+	<div class="text-center">
+		<button type="button" class="btn btn-success" onclick="purchase();">購買</button>
+		<a href="<%= request.getContextPath() %>/product/productList" class="btn btn-secondary">
+		  返回商品清單
+		</a>
 	</div>
 </body>
 <script>
@@ -54,10 +77,14 @@
     $('#myTable').DataTable({
       // optional: 調整語言（中文化）
       language: {
-        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/zh-HANT.json"
+        url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/zh-HANT.json"
       }
     });
   });
+  
+  function purchase(){
+	  document.getElementById("purchaseForm").submit();
+  }
 </script>
 
 </html>

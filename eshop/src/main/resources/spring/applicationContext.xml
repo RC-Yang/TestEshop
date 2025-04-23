@@ -5,6 +5,8 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
                         http://www.springframework.org/schema/beans/spring-beans.xsd 
                         http://www.springframework.org/schema/context 
@@ -12,7 +14,9 @@
                         http://www.springframework.org/schema/aop 
                         http://www.springframework.org/schema/aop/spring-aop.xsd   
                         http://www.springframework.org/schema/tx 
-                        http://www.springframework.org/schema/tx/spring-tx.xsd">
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/data/jpa
+        				https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	<!-- 掃描 com.example 包下的 Spring Bean -->
 	<context:component-scan
@@ -82,19 +86,28 @@
 	</bean>
 
 	<!-- 配置交易管理器 -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
+	<!-- Hibernate 的 TransactionManager -->
+	<bean id="hibernateTxManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	    <property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- JPA 的 TransactionManager -->
+	<bean id="jpaTxManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="jdbcTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource"/>
 	</bean>
 
 	<!-- 使用 Spring AOP 代理交易管理 -->
 	<tx:annotation-driven
-		transaction-manager="transactionManager" />
+		transaction-manager="jpaTxManager" />
 
 	<!-- 交易攔截器，設定不同方法的交易屬性 -->
 	<bean id="transactionInterceptor"
 		class="org.springframework.transaction.interceptor.TransactionInterceptor">
-		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionManager" ref="jpaTxManager" />
 		<property name="transactionAttributes">
 			<props>
 				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
@@ -118,6 +131,31 @@
 				<value>transactionInterceptor</value>
 			</list>
 		</property>
+	</bean>
+	<!-- 啟用 Spring Data JPA -->
+	<jpa:repositories base-package="com.example.dao"  
+					transaction-manager-ref="jpaTxManager"
+                  entity-manager-factory-ref="entityManagerFactory"/>
+
+	
+	<bean id="entityManagerFactory"
+      class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	    <property name="dataSource" ref="dataSource" />
+	    <property name="packagesToScan" value="com.example.pojo.entity" />
+	    <property name="jpaVendorAdapter">
+	        <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+	            <property name="showSql" value="true" />
+	            <property name="generateDdl" value="true" />
+	            <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+	        </bean>
+	    </property>
+	    <property name="jpaProperties">
+		    <props>
+		        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+		        <prop key="hibernate.hbm2ddl.auto">update</prop>
+		        <prop key="hibernate.show_sql">true</prop>
+		    </props>
+		</property>    
 	</bean>
 
 	<!-- 匯入額外的 Spring 配置 -->

@@ -114,7 +114,30 @@
 		    <artifactId>struts2-json-plugin</artifactId>
 		    <version>${struts.version}</version> 
 		</dependency>
-
+		 <dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-api</artifactId>
+		    <version>2.20.0</version> <!-- 可改為最新版 -->
+		  </dependency>
+		
+		  <!-- log4j-core -->
+		  <dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
+		    <version>2.20.0</version>
+		  </dependency>
+		  
+		  <dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-jpa</artifactId>
+		    <version>2.7.3</version> <!-- 搭配 Spring 5.3.20 非常穩定 -->
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.36</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>eshop</finalName>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="purchase" extends="json-default" namespace="/purchase">
+		<action name="purchase" 
+	            class="com.example.action.PurchaseAction" 
+	            method="purchase">
+	    </action>
+	    
+	    <action name="goToPurchase" 
+	            class="com.example.action.PurchaseAction" 
+	            method="goToPurchase">
+	        
+	        <result name="success">/WEB-INF/views/purchase/checkPurchase.jsp</result>
+	    </action>
+	    
+	    <action name="goToCashSuccess" 
+	            class="com.example.action.PurchaseAction" 
+	            method="goToCashSuccess">
+	        
+	        <result name="success">/WEB-INF/views/purchase/goToCashSuccess.jsp</result>
+	    </action>
+	    
+	     <action name="cashFinish" 
+	            class="com.example.action.PurchaseAction" 
+	            method="cashFinish">
+	        
+	        <result name="success">/WEB-INF/views/purchase/cashFinish.jsp</result>
+	    </action>
+    </package>
+</struts>

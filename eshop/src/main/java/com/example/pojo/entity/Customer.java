@@ -22,9 +22,9 @@ public class Customer {
 	private String custName;
 	@Column(name="country")
 	private String country;
+	@Column(name = "login_id")
+	private String loginId;
 	
-	@OneToOne(mappedBy="customer", cascade = CascadeType.ALL)
-	private Order order;
 	public Integer getCustId() {
 		return custId;
 	}
@@ -49,10 +49,10 @@ public class Customer {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public Order getOrder() {
-		return order;
+	public String getLoginId() {
+		return loginId;
 	}
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 }

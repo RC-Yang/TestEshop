@@ -2,8 +2,7 @@ package com.example.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,27 +22,30 @@ public class CartService {
 	@Autowired
 	UserDao userDao;
 	
-	@Transactional
+	@Transactional(transactionManager = "jdbcTxManager")
 	public int addToCart(Integer userId,Integer prodId) {
 	
 		int result = 0;
 
-		Object[] obj = productDao.queryProductById(prodId);
+		UserCart usercart = new UserCart();
 		
-		if(obj!=null) {
-			UserCart usercart = new UserCart();
-			
-			Product p = new Product();
-			p.setProdId(prodId);
-			
-			User user = new User();
-			user.setId(userId.toString());
-			
-			usercart.setProduct(p);
-			usercart.setUser(user);
-			
+		Product p = new Product();
+		p.setProdId(prodId);
+		
+		User user = new User();
+		user.setLoginId(userId.toString());
+		
+		usercart.setProduct(p);
+		usercart.setUser(user);
+		
+		Object[] obj = cartDao.queryCart(userId.toString(), prodId);
+		
+		if(obj==null) {
 			result = cartDao.addToCart(usercart);
-		}
+		}else {
+			result = cartDao.updateCart(usercart);
+		}	
+
 		return result;
 	}
 	

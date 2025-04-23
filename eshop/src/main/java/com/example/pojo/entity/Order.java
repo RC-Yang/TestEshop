@@ -29,6 +29,8 @@ public class Order {
 	@OneToOne
 	@JoinColumn(name="cust_id")
 	private Customer customer;
+	@Column(name="state")
+	private String state;
 
 	public Integer getOrdNumId() {
 		return ordNumId;
@@ -65,6 +67,12 @@ public class Order {
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }
