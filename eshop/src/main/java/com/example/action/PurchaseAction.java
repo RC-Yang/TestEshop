@@ -3,8 +3,11 @@ package com.example.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,9 +35,18 @@ public class PurchaseAction extends BaseAction{
 	private List<CartItem> cartItem; 
 	
 	private AllInOne all = new AllInOne("");
+	
+	private List<Integer> selectedIndexes;
 
 	public PurchaseAction() throws Exception {
 		super();
+	}
+
+	public List<CartItem> getSelectedCartItems() {
+	    return selectedIndexes.stream()
+	        .filter(i -> i >= 0 && i < cartItem.size())
+	        .map(i -> cartItem.get(i))
+	        .collect(Collectors.toList());
 	}
 
 	public void purchase() throws IOException {
@@ -72,7 +84,8 @@ public class PurchaseAction extends BaseAction{
 	}
 	
 	public String goToPurchase() {
-		getSession().setAttribute("cartItem", cartItem);
+		
+		getSession().setAttribute("cartItem", getSelectedCartItems());
 		
 		return SUCCESS;
 	}
@@ -103,5 +116,12 @@ public class PurchaseAction extends BaseAction{
 		this.cartItem = cartItem;
 	}
 
+	public List<Integer> getSelectedIndexes() {
+		return selectedIndexes;
+	}
+
+	public void setSelectedIndexes(List<Integer> selectedIndexes) {
+		this.selectedIndexes = selectedIndexes;
+	}
 
 }

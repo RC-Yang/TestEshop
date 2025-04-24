@@ -36,6 +36,7 @@
 		      <th>商品名稱</th>
 		      <th>價格</th>
 		      <th>數量</th>
+		      <th>是否購買</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -48,8 +49,9 @@
 					      <td><s:property value="#cart[1]" /></td>
 					      <td>
 					      	<input type="hidden" name='<%="cartItem[" + index + "].prodId" %>'
-					      	 value="<s:property value="#cart[3]" />" />
-					      	<select class="form-select" name='<%="cartItem[" + index + "].quantity" %>'>
+					      	 value="<s:property value="#cart[3]" />" id="prodId_<%=index%>"/>
+					      	<select class="form-select" name='<%="cartItem[" + index + "].quantity" %>'
+					      			id="quantity_<%=index%>">
 					      		<s:iterator begin="1" end="%{#cart[2]}" var="j">
 								    <option value="<s:property value='#j' />"
 								      <s:if test="#j == 1">selected</s:if>>
@@ -58,7 +60,14 @@
 							  </s:iterator>
 					      	</select>
 					      </td>
+					      <td>
+				      		<div class="form-check p-0 m-0 d-flex justify-content-center align-items-center">
+							  <input class="form-check-input" type="checkbox" checked id="checkbox_<%=index%>"
+							  	name='selectedIndexes' value="<%= index %>">
+							</div>
+					      </td>
 				    </tr>
+				    <% index++; %>
 				  </s:iterator>
 			  
 		  </tbody>

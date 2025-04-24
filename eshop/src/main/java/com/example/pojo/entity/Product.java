@@ -30,9 +30,7 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="prod_line_id")
 	private ProductLine prodLine;
-	
-	@OneToOne(mappedBy="product", cascade = CascadeType.ALL)
-	private Order order;
+
 	public Integer getProdId() {
 		return prodId;
 	}
@@ -70,10 +68,5 @@ public class Product {
 	public void setProdLine(ProductLine prodLine) {
 		this.prodLine = prodLine;
 	}
-	public Order getOrder() {
-		return order;
-	}
-	public void setOrder(Order order) {
-		this.order = order;
-	}
+
 }
