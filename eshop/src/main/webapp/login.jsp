@@ -19,41 +19,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用戶登入</title>
     <script src="public/jquery-3.4.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>用戶登入</title>
 </head>
 <body>
-    <form id="loginForm" action="login/login" method="post">
-        <div style="margin: 50px;">
-            <table>
-                <!-- 顯示錯誤訊息 -->
-                <c:if test="${not empty msg}">
-                    <tr>
-                        <td colspan="2" align="center" style="color: red;">
-                            <c:out value="${msg}" />
-                        </td>
-                    </tr>
-                </c:if>
-                <tr>
-                    <td>使用者名稱：</td>
-                    <td>
-                        <input type="text" name="loginId" value='<c:out value="${loginId}"/>' required>
-                    </td>
-                </tr>
-                <tr>
-                    <td>密碼：</td>
-                    <td>
-                        <input type="password" name="password" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <br />
-                        <button type="button" onclick="validateAndSubmit()">登入</button>
-                        &nbsp;<a href="register/register" style="text-decoration: none;">註冊</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </form>
+	<!-- 顯示錯誤訊息 -->
+     <c:if test="${not empty msg}">
+         <c:out value="${msg}" />
+     </c:if>
+
+	<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+	  <div class="p-4 border rounded" style="width: 100%; max-width: 400px;">
+	    <form id="loginForm" action="login/login" method="post">
+	      <div class="mb-3">
+	        <label for="loginId" class="form-label">使用者名稱：</label>
+	        <input type="text" class="form-control" id="loginId" name="loginId" required>
+	        <div id="emailHelp" class="form-text"><c:out value="${loginId}"/></div>
+	      </div>
+	      <div class="mb-3">
+	        <label for="password" class="form-label">密碼：</label>
+	        <input type="password" class="form-control" id="password" name="password" required>
+	      </div>
+	      <div class="form-check form-check-inline">
+		  	<input class="form-check-input" type="radio" name="userType" id="user" value="1">
+		  	<label class="form-check-label" for="user">一般用戶</label>
+		</div>
+		<div class="form-check form-check-inline">
+		  	<input class="form-check-input" type="radio" name="userType" id="admin" value="2">
+		  	<label class="form-check-label" for="admin">管理者</label>
+		</div>
+	      <button type="submit" class="btn btn-primary">提交</button>&nbsp;
+	      <a class="btn btn-success" href="register/register" style="text-decoration: none;">註冊</a>
+	    </form>
+	  </div>
+	</div>
 
     <script type="text/javascript">
         function validateAndSubmit() {

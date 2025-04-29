@@ -10,5 +10,19 @@
 	        
 	        <result name="success">/WEB-INF/views/order/order_list.jsp</result>
 	    </action>
+	    
+	    <action name="queryAllOrder" 
+	            class="com.example.action.OrderAction" 
+	            method="queryAllOrder">
+	        
+	        <result name="success">/WEB-INF/views/order/order_list_forAdmin.jsp</result>
+	    </action>
+	    
+	    <action name="updateOrderStateByOrdNum" 
+	            class="com.example.action.OrderAction" 
+	            method="updateOrderStateByOrdNum">
+	        
+	        <result name="success" type="json"/>
+	    </action>
     </package>
 </struts>

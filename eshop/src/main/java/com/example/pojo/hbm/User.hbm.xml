@@ -53,5 +53,11 @@
                 <comment>註冊時間</comment>
             </column>
         </property>
+        
+        <property name="userType" type="java.lang.Integer">
+            <column name="user_type" length="7">
+                <comment>用戶型別</comment>
+            </column>
+        </property>
     </class>
 </hibernate-mapping>

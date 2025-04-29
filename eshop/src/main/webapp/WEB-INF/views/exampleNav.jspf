@@ -35,7 +35,10 @@
             <li><a class="dropdown-item" href="#">管理收貨地址</a></li>
           </ul>
         </li>
-      </ul>
+        <li class="nav-item">
+	        <a class="nav-link" href="<%= request.getContextPath() %>/home/logout">登出</a>
+	    </li>
+	  </ul>
       你好！${session_user.loginId}！
       <form class="d-flex justify-content-center align-items-center my-0">
         <input class="form-control mx-1" type="search" placeholder="Search" aria-label="Search">

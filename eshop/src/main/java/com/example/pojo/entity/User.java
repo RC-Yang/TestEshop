@@ -36,6 +36,9 @@ public class User {
     // 使用者註冊日期
 	@Column(name="create_date")
     private Date createDate;
+	
+	@Column(name="user_type")
+	private Integer userType;
 
     // 取得使用者的 ID
     public String getId() {
@@ -96,5 +99,13 @@ public class User {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+	public Integer getUserType() {
+		return userType;
+	}
+
+	public void setUserType(Integer userType) {
+		this.userType = userType;
+	}
     
 }

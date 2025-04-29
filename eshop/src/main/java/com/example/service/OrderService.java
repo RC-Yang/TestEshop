@@ -2,15 +2,19 @@ package com.example.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.example.dao.CustomerRepository;
 import com.example.dao.OrderRepository;
 import com.example.dao.ProductRepository;
 import com.example.dto.CartItem;
+import com.example.dto.OrderItems;
 import com.example.pojo.entity.Customer;
 import com.example.pojo.entity.Order;
 import com.example.pojo.entity.Product;
@@ -62,5 +66,24 @@ public class OrderService {
     
     public void updateOrderState(String ordNum,String state) {
     	orderRepository.updateOrderState(ordNum, state);
+    }
+    
+    public List<OrderItems> queryAllOrder(){
+    	List<Order> orders = orderRepository.findAll();
+    	
+    	Map<String, List<Order>> grouped = orders.stream()
+    	        .collect(Collectors.groupingBy(Order::getOrdNum)); // 依訂單編號分組
+
+    	    List<OrderItems> result = new ArrayList<>();
+
+    	    for (Map.Entry<String, List<Order>> entry : grouped.entrySet()) {
+    	        result.add(new OrderItems(entry.getKey(), entry.getValue()));
+    	    }
+
+    	    return result;
+    }
+    
+    public int updateOrderStateByOrdNum(String state, String ordNum) {
+    	return orderRepository.updateOrderStateByOrdNum(state, ordNum);
     }
 }
