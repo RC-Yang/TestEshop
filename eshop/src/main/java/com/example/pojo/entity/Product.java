@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,6 +31,9 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="prod_line_id")
 	private ProductLine prodLine;
+	@Lob
+    @Column(name = "prod_image")
+    private byte[] prodImage;
 
 	public Integer getProdId() {
 		return prodId;
@@ -67,6 +71,12 @@ public class Product {
 	}
 	public void setProdLine(ProductLine prodLine) {
 		this.prodLine = prodLine;
+	}
+	public byte[] getProdImage() {
+		return prodImage;
+	}
+	public void setProdImage(byte[] prodImage) {
+		this.prodImage = prodImage;
 	}
 
 }

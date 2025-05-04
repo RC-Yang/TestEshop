@@ -28,8 +28,8 @@
 				    body: "prodId=<s:property value='productDetail[4]' />&userId=${session_user.loginId}"
 				  })
 					//res.json()
-					//是先將httpresponse body轉成json格式字串，再轉成js物件
-					//return 則是將該js物件包在promise物件內，再丟出
+					//是先將json格式的httpresponse body，再轉成js物件
+					//return 則是在promise物件狀態改為fulfilled時，再將該js物件return出來
 				  .then((res)=>{return res.json();})
 				  .then((data) => {
 						if(data.message=='商品成功加入購物車！'){
@@ -72,7 +72,8 @@
 
 	<div class="d-flex justify-content-center align-items-center">
 	  <!-- 商品圖片 -->
-	  <img src="<%= request.getContextPath() %>/photo/photoSample.jpg" class="img-fluid rounded" alt="商品圖片">
+	  <img src="<%= request.getContextPath() %>/product/productImage?prodId=<s:property value='productDetail[4]' />" 
+	  		class="img-fluid rounded" alt="商品圖片">
 		<div style="padding:0 20px;"></div>
 	  <!-- 商品資訊 -->
 	  <div>

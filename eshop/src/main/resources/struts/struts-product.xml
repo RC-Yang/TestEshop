@@ -16,5 +16,9 @@
 	        
 	        <result name="success">/WEB-INF/views/product/product_buy.jsp</result>
 	    </action>
+	    
+	    <action name="productImage" class="com.example.action.ProductAction"
+	    		method="queryProdImageByProdId">
+		</action>	    
     </package>
 </struts>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.dao.ProductDao;
+import com.example.dao.ProductRepository;
 import com.example.pojo.entity.Product;
 import com.example.service.ProductService;
 
@@ -14,6 +15,9 @@ public class ProductServiceImpl implements ProductService{
 
 	@Autowired
 	private ProductDao productDao;
+	@Autowired
+	private ProductRepository productRepository;
+
 	@Override
 	public List<Object[]> queryAllProduct() {
 		
@@ -22,5 +26,10 @@ public class ProductServiceImpl implements ProductService{
 
 	public Object[] queryProductById(Integer id) {
 		return productDao.queryProductById(id);
+	}
+
+	@Override
+	public byte[] findProdImageByProdId(Integer prodId) {
+		return productRepository.findProdImageByProdId(prodId);
 	}
 }

@@ -22,7 +22,7 @@
 	            class="com.example.action.OrderAction" 
 	            method="updateOrderStateByOrdNum">
 	        
-	        <result name="success" type="json"/>
+	        <result name="success" type="json"/><!-- 讓整個 HTTP response body 變成 JSON 格式 -->
 	    </action>
     </package>
 </struts>
