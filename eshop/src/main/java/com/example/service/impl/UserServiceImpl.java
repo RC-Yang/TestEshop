@@ -1,9 +1,12 @@
 package com.example.service.impl;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.dao.UserDao;
+import com.example.dao.UserRepository;
 import com.example.pojo.entity.User;
 import com.example.service.UserService;
 
@@ -18,6 +21,8 @@ public class UserServiceImpl implements UserService {
     // 自動注入 UserDao，負責執行實際的資料庫操作
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * 根據使用者的登入帳號與密碼，查詢使用者是否存在。
@@ -39,7 +44,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(User user) {
         // 呼叫 UserDao 來新增使用者
-        userDao.addUser(user);
+    	 String maxIdStr = userRepository.findMaxId();
+         int maxId = (maxIdStr != null) ? Integer.parseInt(maxIdStr) : 0;
+         user.setId(String.valueOf(maxId + 1));
+
+         userRepository.save(user);
     }
 
 }

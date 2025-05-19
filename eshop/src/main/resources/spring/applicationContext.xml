@@ -158,6 +158,8 @@
 		</property>    
 	</bean>
 
+	<aop:aspectj-autoproxy />
+
 	<!-- 匯入額外的 Spring 配置 -->
 	<import resource="spring-beans.xml" />
 

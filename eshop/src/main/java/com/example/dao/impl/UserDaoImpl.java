@@ -2,8 +2,15 @@ package com.example.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,8 +48,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public void addUser(User user) {
-        // 使用 Hibernate 保存 User 物件
-        getSession().save(user);
+    	
     }
 
     /**
@@ -53,11 +59,11 @@ public class UserDaoImpl implements UserDao {
      */
     private User getUserByHibernate(User user) {
         // 定義 HQL 查詢語句
-        String hql = "from User where loginId = :loginId and password = :password";
+        String hql = "from User where loginId = :loginId";
         // 使用 Hibernate 的 Query 物件來執行 HQL 查詢
         Query<User> query = getSession().createQuery(hql, User.class);
         query.setParameter("loginId", user.getLoginId());
-        query.setParameter("password", user.getPassword());
+        //query.setParameter("password", user.getPassword());
         List<User> userList = query.list();
 
         // 若查詢結果不為空，返回第一筆資料

@@ -11,7 +11,7 @@
         <id name="id" type="java.lang.String">
             <column name="id" length="20" />
             <!-- 註解：使用自定義的 id 生成策略 -->
-            <generator class="com.example.utils.IdGenerateUtil" />
+            <!-- <generator class="com.example.utils.IdGenerateUtil" /> -->
         </id>
         
         <!-- 定義使用者名稱欄位 -->

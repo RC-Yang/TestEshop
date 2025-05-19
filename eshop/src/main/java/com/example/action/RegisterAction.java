@@ -2,10 +2,15 @@ package com.example.action;
 
 import java.util.Date;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.pojo.entity.User;
 import com.example.service.UserService;
+import com.example.TestPasswordUtil;
 import com.example.constant.ConstantName;
 
 public class RegisterAction extends BaseAction {
@@ -50,6 +55,14 @@ public class RegisterAction extends BaseAction {
         try {
             // 設置註冊時間
             setUserCreateDate(user);
+            HttpServletRequest request = ServletActionContext.getRequest();
+            
+            user.setLoginId(request.getParameter("loginId"));
+            user.setName(request.getParameter("loginId"));
+            //給密碼加鹽
+            user.setPassword(TestPasswordUtil.hash(request.getParameter("password")));
+            
+            user.setUserType(Integer.parseInt(request.getParameter("userType")));
 
             // 呼叫 UserService 來保存使用者資料
             userService.addUser(user);

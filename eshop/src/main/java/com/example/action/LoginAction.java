@@ -1,7 +1,11 @@
 package com.example.action;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.example.TestPasswordUtil;
 import com.example.constant.ConstantName;
 import com.example.pojo.entity.User;
 import com.example.service.UserService;
@@ -43,12 +47,13 @@ public class LoginAction extends BaseAction {
             getSession().setAttribute("msg", "請提供有效的帳號與密碼");
             return INPUT;
         }
-
         // 呼叫 UserService 來獲取使用者資料
         user = userService.getLoginUser(user);
+        
+        HttpServletRequest request = ServletActionContext.getRequest();
 
         // 如果用戶資料存在且登入 ID 正確
-        if (user != null && !"".equals(user.getLoginId())) {
+        if (user != null && !"".equals(user.getLoginId())&& TestPasswordUtil.matches(request.getParameter("password"), user.getPassword())) {
             // 登入成功，將用戶資料放入 session 中
             getSession().setAttribute(ConstantName.SESSION_USER, user);
             return SUCCESS;
