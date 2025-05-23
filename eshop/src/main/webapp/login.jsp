@@ -11,6 +11,11 @@
         response.sendRedirect("home/index");
     }
 %>
+<%
+	String lang = request.getLocale().toString(); // 例如 zh_TW
+	TestTranslationBean translator = (TestTranslationBean)application.getAttribute("translator");
+%>
+<%@ page import="com.example.*" %>
 
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -33,12 +38,12 @@
 	  <div class="p-4 border rounded" style="width: 100%; max-width: 400px;">
 	    <form id="loginForm" action="login/login" method="post">
 	      <div class="mb-3">
-	        <label for="loginId" class="form-label">使用者名稱：</label>
+	        <label for="loginId" class="form-label"><%= translator.getText("login.username.label", lang) %>：</label>
 	        <input type="text" class="form-control" id="loginId" name="loginId" required>
 	        <div id="emailHelp" class="form-text"><c:out value="${loginId}"/></div>
 	      </div>
 	      <div class="mb-3">
-	        <label for="password" class="form-label">密碼：</label>
+	        <label for="password" class="form-label"><%= translator.getText("login.password.label", lang) %>：</label>
 	        <input type="password" class="form-control" id="password" name="password" required>
 	      </div>
 	      <div class="form-check form-check-inline">
@@ -49,8 +54,8 @@
 		  	<input class="form-check-input" type="radio" name="userType" id="admin" value="2">
 		  	<label class="form-check-label" for="admin">管理者</label>
 		</div>
-	      <button type="submit" class="btn btn-primary">提交</button>&nbsp;
-	      <a class="btn btn-success" href="register/register" style="text-decoration: none;">註冊</a>
+	      <button type="submit" class="btn btn-primary"><%= translator.getText("login.submit", lang) %></button>&nbsp;
+	      <a class="btn btn-success" href="register/register" style="text-decoration: none;"><%= translator.getText("register.submit", lang) %></a>
 	    </form>
 	  </div>
 	</div>

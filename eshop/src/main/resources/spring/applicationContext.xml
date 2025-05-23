@@ -159,6 +159,8 @@
 	</bean>
 
 	<aop:aspectj-autoproxy />
+	
+	<bean id="testTranslationBean" class="com.example.TestTranslationBean"/>
 
 	<!-- 匯入額外的 Spring 配置 -->
 	<import resource="spring-beans.xml" />

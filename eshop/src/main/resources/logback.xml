@@ -3,7 +3,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- 註解：定義日誌的格式，這裡使用的格式包括時間、日誌等級、記錄器名稱及訊息內容 -->
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) %logger{36} - %highlight(%msg) %n</pattern>
         </encoder>
     </appender>
 
