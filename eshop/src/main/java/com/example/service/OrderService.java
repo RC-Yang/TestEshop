@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -54,12 +56,21 @@ public class OrderService {
         }
         return orderNum;
     }
-    
+
     public List<Order> queryOrder(String loginId){
     	Customer customer = customerRepository.findByLoginId(loginId)
     		    .orElseThrow(() -> new RuntimeException("查無此用戶"));
 
 		List<Order> result = orderRepository.findByCustomer_CustId(customer.getCustId());
+		
+		return result;
+    }
+    
+    public Page<Order> queryOrder(String loginId,Pageable page){
+    	Customer customer = customerRepository.findByLoginId(loginId)
+    		    .orElseThrow(() -> new RuntimeException("查無此用戶"));
+
+		Page<Order> result = orderRepository.findByCustomer_CustId(customer.getCustId(),page);
 		
 		return result;
     }
@@ -73,10 +84,14 @@ public class OrderService {
     	
     	Map<String, List<Order>> grouped = orders.stream()
     	        .collect(Collectors.groupingBy(Order::getOrdNum)); // 依訂單編號分組
+    	//Collectors.groupingBy(x->x.getOrdNum())
+    	//Collectors工具類，實作Collector這個規格書，所以才說Collectors工具類，就是Java Collector API
+    	//Stream API要用Java Collector API，就必須呼叫collect()
 
     	    List<OrderItems> result = new ArrayList<>();
 
     	    for (Map.Entry<String, List<Order>> entry : grouped.entrySet()) {
+    	    	//Entry不能直接當成一個類的原因：因為Entry是Map內部的資料結構
     	        result.add(new OrderItems(entry.getKey(), entry.getValue()));
     	    }
 
@@ -85,5 +100,9 @@ public class OrderService {
     
     public int updateOrderStateByOrdNum(String state, String ordNum) {
     	return orderRepository.updateOrderStateByOrdNum(state, ordNum);
+    }
+    
+    public List<Object> findStateAndOrderNum() {
+    	return orderRepository.findStateAndOrderNum();
     }
 }

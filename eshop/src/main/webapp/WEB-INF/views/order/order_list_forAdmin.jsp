@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,19 +18,20 @@
     <div class="w-75 mx-auto">
 		<div class="accordion" id="orderAccordion">
 		    <s:iterator value="orderGroupList" var="orderGroup" status="st">
+		    <!-- 這個orderGroupList，因為來自後端，屬於root物件，故不用加#號，但從orderGroup開始，取出資料就都要加#號 -->
 		        <div class="accordion-item">
-		            <h2 class="accordion-header" id="heading<s:property value='%{#st.index}'/>">
+		            <h2 class="accordion-header" id="heading<s:property value='#st.index'/>">
 		                <button class="accordion-button collapsed" type="button"
 		                        data-bs-toggle="collapse"
-		                        data-bs-target="#collapse<s:property value='%{#st.index}'/>"
+		                        data-bs-target="#collapse<s:property value='#st.index'/>"
 		                        aria-expanded="false"
-		                        aria-controls="collapse<s:property value='%{#st.index}'/>">
+		                        aria-controls="collapse<s:property value='#st.index'/>">
 		                    訂單編號：<s:property value="#orderGroup.ordNum"/>
 		                </button>
 		            </h2>
-		            <div id="collapse<s:property value='%{#st.index}'/>"
+		            <div id="collapse<s:property value='#st.index'/>"
 		                 class="accordion-collapse collapse"
-		                 aria-labelledby="heading<s:property value='%{#st.index}'/>"
+		                 aria-labelledby="heading<s:property value='#st.index'/>"
 		                 data-bs-parent="#orderAccordion">
 		                <div class="accordion-body">
 		                    <table class="table">
@@ -48,6 +50,7 @@
 					                <td><s:property value="#order.ordQty"/></td>
 					                <td>$<s:property value="#order.product.prodPrice"/></td>
 					                <td>$<s:property value="#order.product.prodPrice * #order.ordQty"/></td>
+					                <!-- 上面其實是執行order.getProduct().getProdPrice()，故可以同時找出型別，就可確認可以相乘 -->
 					              </tr>
 					            </s:iterator>
 					          </tbody>
@@ -56,7 +59,26 @@
 					        <form class="mt-3 shipForm">
 					          <input type="hidden" name="ordNum" value="<s:property value='#orderGroup.ordNum'/>">
 					          <input type="hidden" name="state" value="已出貨">
-					          <button type="submit" class="btn btn-success">訂單出貨</button>
+					          
+					          <s:set var="ordNum" value="#orderGroup.ordNum" scope="request"/>
+					          <c:forEach var="stateOrderNum" items="${stateOrderNumList}">
+					          	<c:choose>
+					          		<c:when test="${stateOrderNum[0]==ordNum}">
+					          			
+					          			<c:choose>
+					          				<c:when test="${stateOrderNum[1]=='已出貨'}">
+					          					<button type="button" class="btn btn-secondary" disabled>已出貨</button>
+					          				</c:when>
+					          				<c:when test="${stateOrderNum[1]=='已付款'}">
+					          					<button type="submit" class="btn btn-success">訂單出貨</button>
+					          				</c:when>
+					          			</c:choose>
+					          		</c:when>
+					          		<c:when test="${stateOrderNum[0]!=ordNum}">
+					          		</c:when>
+					          	</c:choose>
+					          </c:forEach>
+
 					        </form>
 		                </div>
 		            </div>
@@ -93,6 +115,7 @@
 	
 	  $(document).ready(function () {
 	    $('.shipForm').on('submit', function (e) {
+		//注意是表單觸發submit事件，而非提交按鈕來觸發，因此this指的就是表單物件
 
 	      e.preventDefault(); // 阻止表單預設提交行為
 	      lastClickedButton = $(this).find('button[type="submit"]');
@@ -100,7 +123,12 @@
 	      $.ajax({
 	        url: '<%=request.getContextPath()%>/order/updateOrderStateByOrdNum', // 後端URL
 	        method: 'POST',
-	        data: $(this).serialize(), // 傳送表單所有欄位
+	        //data: $(this).serialize(), //對表單資料做序列化成key-value對，以便傳遞
+	        //以下三行，主要用於表單含有多媒體資訊
+	        data:new FormData(this),
+	        processData: false,
+	        contentType: false,
+	        
 	        success: function (response) {
 	          if(response.message=='訂單已成功出貨！'){
 	        	  const modal = new bootstrap.Modal(document.getElementById('shipSuccessModal'));
@@ -118,7 +146,7 @@
 	    	      .text('已出貨')
 	    	      .removeClass('btn-success')
 	    	      .addClass('btn-secondary')
-	    	      .prop('disabled', true);
+	    	      .prop('disabled', true);//attr操作dom元素的靜態屬性、prop操作dom元素的動態屬性
 	    	})
 	  });
 	</script>	

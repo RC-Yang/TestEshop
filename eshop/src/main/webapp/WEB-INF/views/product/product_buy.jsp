@@ -27,10 +27,12 @@
 				    },
 				    body: "prodId=<s:property value='productDetail[4]' />&userId=${session_user.loginId}"
 				  })
-					//res.json()
-					//是先將json格式的httpresponse body，再轉成js物件
+					//res是javascript的httpResponse型別物件
+				  	//res.json()是httpresponse body(這為json格式，因Struts 2設定檔有相關設定)，轉成json格式的普通js物件
 					//return 則是在promise物件狀態改為fulfilled時，再將該js物件return出來
 				  .then((res)=>{return res.json();})
+				  //這個data是json格式的js物件
+				  //在action加入的字串屬性名-值對，就在該物件內，可直接用字串對應的屬性名將其取出
 				  .then((data) => {
 						if(data.message=='商品成功加入購物車！'){
 							  var myModal = new bootstrap.Modal(document.querySelector('#modal1'));

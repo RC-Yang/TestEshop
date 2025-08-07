@@ -23,7 +23,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <a href="/eshop/home/index" class="btn btn-primary">返回首頁</a>
-	        <a href="/eshop/order/queryOrderList" class="btn btn-outline-secondary">查看訂單</a>
+	        <a href="/eshop/order/queryOrderList?page=1&size=10" class="btn btn-outline-secondary">查看訂單</a>
 	      </div>
 	    </div>
 	  </div>

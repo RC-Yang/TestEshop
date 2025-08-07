@@ -21,7 +21,7 @@
             訂單管理
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="<%= request.getContextPath() %>/order/queryOrderList">訂單詳細資訊</a></li>
+            <li><a class="dropdown-item" href="<%= request.getContextPath() %>/order/queryOrderList?page=1&size=10">訂單詳細資訊</a></li>
             <li><a class="dropdown-item" href="#">訂單狀態更新</a></li>
           </ul>
         </li>

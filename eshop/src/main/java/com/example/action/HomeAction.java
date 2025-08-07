@@ -27,7 +27,6 @@ public class HomeAction extends BaseAction {
     public String goHome() {
         User user = (User) getSession().getAttribute(ConstantName.SESSION_USER);
         if (user != null) {
-            getRequest().setAttribute("user", user);
             return SUCCESS;
         } else {
             // 如果使用者未登入，重定向到登入頁

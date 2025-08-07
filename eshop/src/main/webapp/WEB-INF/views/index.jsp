@@ -11,10 +11,13 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 <nav class="navbar navbar-expand bg-info">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    <a class="navbar-brand d-flex justify-content-center align-items-center mx-3 my-auto" href="#">EShop</a>
+  <div class="container-fluid 
+  		d-flex justify-content-between align-items-center px-3">
+    <a class="navbar-brand 
+    	d-inline-flex justify-content-center align-items-center" href="#">EShop</a>
 	<div class="d-flex justify-content-center align-items-center">   
-	    <ul class="navbar-nav d-flex justify-content-center align-items-center">
+	    <ul class="navbar-nav 
+	    	d-flex justify-content-center align-items-center">
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 	          購買商品
@@ -39,7 +42,7 @@
 	        </a>
 	        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 	        	<c:if test="${session_user.userType eq 1}">
-	          		<li><a class="dropdown-item" href="<%= request.getContextPath() %>/order/queryOrderList">訂單詳細資訊</a></li>
+	          		<li><a class="dropdown-item" href="<%= request.getContextPath() %>/order/queryOrderList?page=1&size=10">訂單詳細資訊</a></li>
 	          	</c:if>
 	          <c:if test="${session_user.userType eq 2}">
 	          	<li><a class="dropdown-item" href="<%= request.getContextPath() %>/order/queryAllOrder">訂單詳細資訊</a></li>
@@ -62,14 +65,15 @@
 	      </li>
 	      </ul>
 	      你好！${session_user.loginId}！
-		  <form class="d-flex justify-content-center align-items-center my-0">
+		  <form class="d-flex justify-content-center align-items-center">
 		      <input class="form-control mx-1" type="search" placeholder="Search" aria-label="Search">
 		      <button class="btn btn-outline-success mx-1" type="submit">Search</button>
+		      <!-- Flex容器中的子元素margin不會重疊 -->
 		  </form>		  
 	  </div>
   </div>
 </nav>
-<main class="flex-grow-1">
+<main class="flex-grow-1"><!-- 確保該flex容器，可以佔有剩餘畫面全部的部分 -->
 
 </main>
 <footer class="d-flex justify-content-center align-items-center bg-info text-dark py-3">eshop</footer>

@@ -42,6 +42,7 @@ public class CartDaoImpl implements CartDao {
 	}
 	
 	public Object[] queryCart(String loginId,Integer prodId) {
+		//寫成A JOIN B JOIN C，解析器無法直接確定或預設某種JOIN方式，是因為可能的JOIN方法太多了
 		String sql = "SELECT p.prod_name,p.prod_price, uc.quantity,p.prod_id FROM user_cart uc join "
 				+ "user u "
 				+ "on uc.user_id=u.login_id "
@@ -49,6 +50,11 @@ public class CartDaoImpl implements CartDao {
 				+ "on uc.prod_id=p.prod_id "
 				+" where uc.user_id = ? and uc.prod_id=?";
 		List<Object[]> resultList = jdbcTemplate.query(sql,new Object[] {loginId,prodId} ,
+		//傳統JDBC，ResultSet邏輯上是一整個查詢結果，而指標已指向其中一筆查詢結果，那要用甚麼來表示該查詢結果？
+		//就是ResultSet，其會不斷指向下一筆查詢到的資料
+		//mapRow需要接收resultSet作為參數？他不是一次只處理一筆資料？
+		//這是因為resultSet，就是當前那筆資料。
+		//rowNum參數沒有用到，那還要寫進Lambda參數裡面？這是因為要用方法簽名，對應真正的方法
 	    (rs, rowNum) -> {
 	    	Object[] obj = new Object[5];
         	obj[0]=rs.getString(1);

@@ -59,7 +59,7 @@ public class RegisterAction extends BaseAction {
             
             user.setLoginId(request.getParameter("loginId"));
             user.setName(request.getParameter("loginId"));
-            //給密碼加鹽
+            //給密碼hash+加鹽
             user.setPassword(TestPasswordUtil.hash(request.getParameter("password")));
             
             user.setUserType(Integer.parseInt(request.getParameter("userType")));
@@ -69,9 +69,13 @@ public class RegisterAction extends BaseAction {
 
             // 註冊成功，將訊息設置到 session
             getSession().setAttribute(ConstantName.SESSION_USER_MSG, "註冊成功，請登入");
+            
+            getSession().setAttribute("registerResult", "註冊成功，請登入");
+            //這裡不可用request，因為redirect會導致request重新產生，進而使原本request的資料丟失
         } catch (Exception e) {
             // 註冊失敗，將錯誤訊息設置到 session
             getSession().setAttribute(ConstantName.SESSION_USER_MSG, "註冊失敗，請重試");
+            getSession().setAttribute("registerResult", "註冊失敗，請重試");
             return INPUT;
         }
 

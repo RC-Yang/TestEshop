@@ -3,6 +3,8 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
     "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
+	<!-- struts.xml的package tag作用是對專案功能做出分類
+		struts.xml的action tag作用是功能內部行為做出分類-->
     <package name="login" extends="default" namespace="/login">
         <interceptors>
             <!-- 
@@ -43,7 +45,11 @@
             <!-- 
                 當登入成功時，導向至首頁 
             -->
-            <result name="success" type="redirect">/home/index</result>
+            <!-- <result name="success">/WEB-INF/views/index.jsp</result> -->
+            <!-- /WEB-INF/views/index.jsp 這種路徑，跟在Spring MVC做forward一樣，所以一樣無法切換瀏覽器url -->
+
+			<!-- Post-Redirect-Get模式，是普遍用於需要切換瀏覽器url，但對應的jsp檔又位於WEB-INF時，常用模式 -->
+			<result name="success" type="redirect">/home/index</result>
         </action>
          
     </package>
