@@ -13,5 +13,5 @@
     </root>
     
     <!-- 原始 C3P0 的 debug log 輸出，這是C3P0自帶的內部log輸出；如果不想要這種輸出，就用以下寫法來取代 -->
-    <logger name="com.mchange.v2" level="WARN"/>
+    <logger name="com.mchange.v2" level="INFO"/>
 </configuration>

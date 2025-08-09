@@ -50,7 +50,7 @@
             $("#form").submit();
         }
         
-        onload=function(){//$(document).ready(function(){})，不等於onload=function(){}
+        onload=function(){
 			document.querySelector("#registerButton").addEventListener("click",function(){
 				validateAndSubmit(2);
 			});
@@ -60,21 +60,13 @@
 <body>
 	<!-- 顯示錯誤訊息 -->
      <c:if test="${not empty msg}">
-     <!-- 在 XML 標準中，屬性值必須用雙引號或單引號包起來，並非表示該EL為字串
-     		所以這裡的雙引號，就跟${not empty msg}到底是不是字串格式，完全無關 -->
-     <!-- 故JSTL所有的屬性值，都必須用雙引號框住了 -->
-
          <c:out value="${msg}" />
-         <!-- 可避免XSS：其會將HTML Code，例如<、>、&，轉成純文字格式：
-         &lt;&gt;&amp;，這些符號，會被瀏覽器轉成對應的純文字格式：<、>、& -->
-    	 <!-- 如何處理${msg}為null的問題->輸出空字串 -->
      </c:if>
-     <c:if test="${not empty registerResult}"><!-- 如果c:if是false，那麼被包圍起來的程式，完全不會被輸出到瀏覽器 -->
+     <c:if test="${not empty registerResult}">
      	<script>
      		alert('<c:out value="${registerResult}" />');
      	</script>
      	<c:remove var="registerResult" scope="session"/>
-     	<!-- registerResult放在session內，在註冊、登入完後，就移除掉 -->
      </c:if>
 
 	<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">

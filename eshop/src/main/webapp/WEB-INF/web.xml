@@ -4,29 +4,38 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
     http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<display-name>Archetype Created Web Application</display-name>
-
-
-    <!-- spring contextConfigLocation参数配置-->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/applicationContext.xml</param-value>
-        <!-- <param-value>classpath:spring/spring-*.xml</param-value> -->
-    </context-param>
+  
+    <!-- spring容器初始化监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <!-- 引入Spring配置java檔的方式 -->
+	<context-param>
+	    <param-name>contextClass</param-name>
+	    <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+	
+	<context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>com.example.TestConfig</param-value>
+	</context-param>
 
 	<!-- struts2核心 -->
 	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
 	</filter>
+	<!-- 這裡的filter-mapping，表示所有請求都會進入該filter，決定是否進入Struts 2 -->
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
-	<!-- spring容器初始化监听器 -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+	<!-- 這裡的context-param，表示請求的url，後綴若是action、do、空字串，則進入Struts 2 -->
+	<context-param>
+	    <param-name>struts.action.extension</param-name>
+	    <param-value>action,do,</param-value>
+	</context-param>
     
 	<session-config>
 		<session-timeout>30</session-timeout>

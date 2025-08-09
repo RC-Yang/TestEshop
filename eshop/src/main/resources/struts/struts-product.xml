@@ -19,6 +19,16 @@
 	    
 	    <action name="productImage" class="com.example.action.ProductAction"
 	    		method="queryProdImageByProdId">
+	    		<result name="success" type="stream">
+			        <param name="inputName">productImageStream</param>
+			        <param name="contentType">image/jpeg</param>
+			        <param name="contentLength">${contentLength}</param>
+			        <!-- 該屬性值期望的是一個常數，但是萬一這個屬性值，因為資源大小不定，不能直接傳入常數的話，
+			        就要變成傳入${變數名稱}，讓Struts 2呼叫對應的getXXX，來取出常數 -->
+			        <param name="contentDisposition">inline</param>
+			        <param name="bufferSize">2048</param>
+			        <!-- 若不想快取可加：<param name="allowCaching">false</param> -->
+			    </result>
 		</action>	    
     </package>
 </struts>

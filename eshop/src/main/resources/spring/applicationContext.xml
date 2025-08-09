@@ -31,8 +31,12 @@
 
 
 	<!-- 讀取 JDBC 設定檔，並可在配置中使用 ${} 變數來引用設定值 -->
-	<context:property-placeholder
-		location="classpath:spring/jdbc.properties" />
+	<!-- target/classes/，位於Maven專案的根目錄(跟pom.xml同位置)，才是執行專案時真正的classpath。
+		src/main/resources其實只是用來放置，專案被編譯時，要被移至classpath的設定檔。 -->
+	<!-- <context:property-placeholder
+		location="classpath:spring/jdbc.properties" /> -->
+	<context:property-placeholder location="classpath:/spring/jdbc.properties"/>
+	<!-- 以上兩種寫法是等價的，因為都是以classpath為開頭的絕對路徑 -->
 
 	<!-- 使用 C3P0 連線池 -->
 	<bean id="dataSource"
@@ -61,6 +65,8 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="mappingLocations">
 			<value>classpath:com/example/pojo/hbm/*.hbm.xml</value>
+			<!-- <value>classpath:/com/example/pojo/hbm/*.hbm.xml</value> -->
+			<!-- 以上兩種寫法是等價的，因為都是以classpath為開頭的絕對路徑 -->
 		</property>
 		
 		<property name="packagesToScan" value="com.example.pojo.entity" />
@@ -100,7 +106,6 @@
 	    <property name="dataSource" ref="dataSource"/>
 	</bean>
 
-	<!-- 使用 Spring AOP 代理交易管理 -->
 	<tx:annotation-driven
 		transaction-manager="jpaTxManager" />
 
@@ -118,20 +123,6 @@
 		</property>
 	</bean>
 
-	<!-- 設定 AOP 自動代理機制，讓特定 Bean 自動被交易攔截器管理 -->
-	<bean id="autoproxy"
-		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-		<property name="beanNames">
-			<list>
-				<value>*ServiceImpl</value>
-			</list>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>transactionInterceptor</value>
-			</list>
-		</property>
-	</bean>
 	<!-- 啟用 Spring Data JPA -->
 	<jpa:repositories base-package="com.example.dao"  
 					transaction-manager-ref="jpaTxManager"
@@ -157,8 +148,6 @@
 		    </props>
 		</property>    
 	</bean>
-
-	<aop:aspectj-autoproxy />
 
 	<!-- 匯入額外的 Spring 配置 -->
 	<import resource="spring-beans.xml" />

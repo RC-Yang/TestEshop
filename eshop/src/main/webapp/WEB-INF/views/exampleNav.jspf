@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
-<nav class="navbar navbar-expand w-100 bg-info position-fixed top-0">
+<nav class="navbar navbar-expand w-100 bg-info top-0 position-fixed" style="z-index:1100;">
+<!-- top-0 position-fixed，前者表示要讓導覽列貼緊頁面最上方、後者表示不管頁面如何向下拖曳，該導覽列都永遠位於頁面最上方 -->
   <div class="container-fluid">
     <a class="navbar-brand d-flex justify-content-center align-items-center mx-3 my-auto" href="#">EShop</a>
     <div class="d-flex justify-content-center align-items-center">   

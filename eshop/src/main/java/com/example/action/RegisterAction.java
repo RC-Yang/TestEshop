@@ -21,6 +21,9 @@ public class RegisterAction extends BaseAction {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private TestPasswordUtil testPasswordUtil;
 
     /**
      * 使用模型驅動來封裝 User 物件
@@ -60,7 +63,7 @@ public class RegisterAction extends BaseAction {
             user.setLoginId(request.getParameter("loginId"));
             user.setName(request.getParameter("loginId"));
             //給密碼hash+加鹽
-            user.setPassword(TestPasswordUtil.hash(request.getParameter("password")));
+            user.setPassword(testPasswordUtil.hash(request.getParameter("password")));
             
             user.setUserType(Integer.parseInt(request.getParameter("userType")));
 
@@ -109,4 +112,12 @@ public class RegisterAction extends BaseAction {
     public void setUser(User user) {
         this.user = user;
     }
+
+	public TestPasswordUtil getTestPasswordUtil() {
+		return testPasswordUtil;
+	}
+
+	public void setTestPasswordUtil(TestPasswordUtil testPasswordUtil) {
+		this.testPasswordUtil = testPasswordUtil;
+	}
 }

@@ -24,15 +24,11 @@ public class TestAspect {
     public void TestBefore(JoinPoint joinPoint) {
     	logger.info("位於"+joinPoint.getTarget().getClass().getSimpleName()+" ");
     	logger.info(joinPoint.getSignature().getName()+"即將執行...");
-    	//System.out.print("位於"+joinPoint.getTarget().getClass().getSimpleName()+",");
-        //System.out.println(joinPoint.getSignature().getName()+"即將執行...");
     }
 
     @After("execution(* com.example.service..*.*(..))|| execution(* com.example.dao..*.*(..))")
     public void TestAfter(JoinPoint joinPoint) {
     	logger.info("位於"+joinPoint.getTarget().getClass().getSimpleName()+" ");
     	logger.info(joinPoint.getSignature().getName()+"執行結束...");
-    	//System.out.print("位於"+joinPoint.getTarget().getClass().getSimpleName()+" ");
-        //System.out.println(joinPoint.getSignature().getName()+"執行結束...");
     }
 }

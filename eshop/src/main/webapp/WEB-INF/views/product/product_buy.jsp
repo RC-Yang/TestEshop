@@ -76,7 +76,8 @@
 	  <!-- 商品圖片 -->
 	  <img src="<%= request.getContextPath() %>/product/productImage?prodId=<s:property value='productDetail[4]' />" 
 	  		class="img-fluid rounded" alt="商品圖片">
-		<div style="padding:0 20px;"></div>
+	  <!-- 這個src，是一被瀏覽器解析到，就立刻執行 -->
+	  <div style="padding:0 20px;"></div>
 	  <!-- 商品資訊 -->
 	  <div>
 	    <h2 class="fw-bold"><s:property value="productDetail[0]" /></h2>

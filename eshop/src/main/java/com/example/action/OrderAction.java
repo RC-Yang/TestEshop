@@ -23,7 +23,7 @@ public class OrderAction extends BaseAction{
 	//List<Order> orderList;
 	List<OrderItems> orderGroupList;
 	private String message;
-	private String buttonMessage;
+
 	private List<Object> stateOrderNumList;
 	
 	private int page;
@@ -67,12 +67,9 @@ public class OrderAction extends BaseAction{
 		 int result = orderService.updateOrderStateByOrdNum(state, ordNum);
 		 
 		 if(result>0) {
-			 buttonMessage="已出貨";
 			 message="訂單已成功出貨！"; 
 
 			 return SUCCESS;
-			 //上面的SUCCESS，搭配xml設定，表示要將response body內容，包裝為json格式
-			 //message="訂單已成功出貨！"就成為json格式字串內容
 		 }else {
 			 return "";
 		 }
@@ -108,14 +105,6 @@ public class OrderAction extends BaseAction{
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public String getButtonMessage() {
-		return buttonMessage;
-	}
-
-	public void setButtonMessage(String buttonMessage) {
-		this.buttonMessage = buttonMessage;
 	}
 
 	public int getPage() {

@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.ModelDriven;
  * BaseAction 是所有 Struts2 Action 類別的基底類別，提供基本的 HttpServletRequest 和 HttpSession 訪問方法。
  * 子類別可以繼承此類別來簡化其實作，並方便地存取請求與 session 資料。
  */
+//實作modelDriven，意義是宣告這個action有model
 public class BaseAction extends ActionSupport implements ModelDriven<Object> {
 
     private static final long serialVersionUID = 1L;

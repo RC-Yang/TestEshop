@@ -49,6 +49,7 @@ public class CartService {
 		return result;
 	}
 	
+	@Transactional(transactionManager = "jdbcTxManager")
 	public List<Object[]> queryCart(String loginId) {
 		return cartDao.queryCart(loginId);
 	}

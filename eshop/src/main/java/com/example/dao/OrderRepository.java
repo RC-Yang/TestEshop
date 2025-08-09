@@ -18,7 +18,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	@Modifying
 	//@Modifying
 	//作用是讓@Query產生非查詢的JPQL，以補強Spring Data JPA預設，非查詢方法，功能上只能用id來作為條件的限制。
-    @Transactional
     @Query("UPDATE Order o SET o.state = :state WHERE o.ordNum = :ordNum")
     void updateOrderState(@Param("ordNum") String ordNum, @Param("state") String state);
 	
@@ -30,7 +29,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	List<Object> findStateAndOrderNum();
 	
 	@Modifying
-	@Transactional
 	@Query("UPDATE Order o SET o.state = :state WHERE o.ordNum = :ordNum")
 	int updateOrderStateByOrdNum(@Param("state") String state, @Param("ordNum") String ordNum);
 }

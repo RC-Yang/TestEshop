@@ -52,7 +52,6 @@
 		</div>
 
 		<!-- 下兩行，即可將當前頁碼和currentPage給相互綁定 -->
-		<!-- 搭配currentPage已被設置成被Vue監聽，當這些變數發生改變(例如當前頁碼被改變之時)，Vue物件作用的html區塊，跟currentPage關聯的部分，便會重新渲染 -->
         <b-pagination
          v-model="currentPage"
          :total-rows="totalItems"
@@ -76,7 +75,7 @@
 			el: '#app',//要將該vue物件跟該id範圍進行綁定
 			data(){
 				return{
-					currentPage:1,//讓currentPage被Vue監聽，這樣一旦currentPage值改變，Vue監聽到之時，所有用到currentPage的html區塊都會重新渲染，即可做出分頁效果
+					currentPage:1,
 					totalItems:document.querySelectorAll(".accordion-item").length,
 					itemsPerPage:10
 				};

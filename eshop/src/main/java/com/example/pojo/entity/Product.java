@@ -1,5 +1,7 @@
 package com.example.pojo.entity;
 
+import java.sql.Blob;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +35,7 @@ public class Product {
 	private ProductLine prodLine;
 	@Lob
     @Column(name = "prod_image")
-    private byte[] prodImage;
+    private Blob prodImage;
 
 	public Integer getProdId() {
 		return prodId;
@@ -72,10 +74,10 @@ public class Product {
 	public void setProdLine(ProductLine prodLine) {
 		this.prodLine = prodLine;
 	}
-	public byte[] getProdImage() {
+	public Blob getProdImage() {
 		return prodImage;
 	}
-	public void setProdImage(byte[] prodImage) {
+	public void setProdImage(Blob prodImage) {
 		this.prodImage = prodImage;
 	}
 

@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +35,7 @@ public class OrderService {
     @Autowired
     private CustomerRepository customerRepository;
     
+    @Transactional
     public String createOrder(String custId, List<CartItem> cartItems) {
 
     	String orderNum = "ORD" + System.currentTimeMillis();
@@ -57,6 +60,7 @@ public class OrderService {
         return orderNum;
     }
 
+    @Transactional
     public List<Order> queryOrder(String loginId){
     	Customer customer = customerRepository.findByLoginId(loginId)
     		    .orElseThrow(() -> new RuntimeException("查無此用戶"));
@@ -66,6 +70,7 @@ public class OrderService {
 		return result;
     }
     
+    @Transactional
     public Page<Order> queryOrder(String loginId,Pageable page){
     	Customer customer = customerRepository.findByLoginId(loginId)
     		    .orElseThrow(() -> new RuntimeException("查無此用戶"));
@@ -75,10 +80,12 @@ public class OrderService {
 		return result;
     }
     
+    @Transactional
     public void updateOrderState(String ordNum,String state) {
     	orderRepository.updateOrderState(ordNum, state);
     }
     
+    @Transactional
     public List<OrderItems> queryAllOrder(){
     	List<Order> orders = orderRepository.findAll();
     	
@@ -98,10 +105,12 @@ public class OrderService {
     	    return result;
     }
     
+    @Transactional
     public int updateOrderStateByOrdNum(String state, String ordNum) {
     	return orderRepository.updateOrderStateByOrdNum(state, ordNum);
     }
     
+    @Transactional
     public List<Object> findStateAndOrderNum() {
     	return orderRepository.findStateAndOrderNum();
     }

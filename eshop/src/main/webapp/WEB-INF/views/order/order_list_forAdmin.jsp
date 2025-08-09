@@ -60,7 +60,8 @@
 					          <input type="hidden" name="ordNum" value="<s:property value='#orderGroup.ordNum'/>">
 					          <input type="hidden" name="state" value="已出貨">
 					          
-					          <s:set var="ordNum" value="#orderGroup.ordNum" scope="request"/>
+					          
+					          <s:set value="#orderGroup.ordNum" var="ordNum" scope="request"/>
 					          <c:forEach var="stateOrderNum" items="${stateOrderNumList}">
 					          	<c:choose>
 					          		<c:when test="${stateOrderNum[0]==ordNum}">
@@ -121,7 +122,7 @@
 	      lastClickedButton = $(this).find('button[type="submit"]');
 
 	      $.ajax({
-	        url: '<%=request.getContextPath()%>/order/updateOrderStateByOrdNum', // 後端URL
+	        url: '<%=request.getContextPath()%>/order/updateOrderStateByOrdNum',
 	        method: 'POST',
 	        //data: $(this).serialize(), //對表單資料做序列化成key-value對，以便傳遞
 	        //以下三行，主要用於表單含有多媒體資訊
@@ -129,9 +130,13 @@
 	        processData: false,
 	        contentType: false,
 	        
-	        success: function (response) {
+	        success: function (response) {//response變數，這邊是httpResponse Body，物件化的樣子
 	          if(response.message=='訂單已成功出貨！'){
-	        	  const modal = new bootstrap.Modal(document.getElementById('shipSuccessModal'));
+	        	  const modal = new bootstrap.Modal(document.getElementById('shipSuccessModal'),
+	        			  {
+			        		  backdrop: 'static',  // 不可點背景關閉
+			        		  keyboard: false      // 禁用 ESC 鍵關閉
+			        		});//DOM元素不可能直接具備modal的功能，所以bootstrap特別設計modal方法，給DOM元素裝飾成modal物件
 		          modal.show();
 	          } 
 	        },

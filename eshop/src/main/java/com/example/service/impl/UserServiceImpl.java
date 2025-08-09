@@ -2,8 +2,10 @@ package com.example.service.impl;
 
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.dao.UserDao;
 import com.example.dao.UserRepository;
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService {
      * @return     如果使用者存在，返回對應的 User 物件，否則返回 null
      */
     @Override
+    @Transactional(transactionManager = "hibernateTxManager")
     public User getLoginUser(User user) {
         // 呼叫 UserDao 來查詢登入的使用者
         return userDao.getLoginUser(user);
@@ -42,6 +45,7 @@ public class UserServiceImpl implements UserService {
      * @param user 要新增的 User 物件
      */
     @Override
+    @Transactional
     public void addUser(User user) {
         // 呼叫 UserDao 來新增使用者
     	 String maxIdStr = userRepository.findMaxId();

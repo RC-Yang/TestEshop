@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.TestPasswordUtil;
 import com.example.constant.ConstantName;
@@ -23,6 +24,12 @@ public class LoginAction extends BaseAction {
     // 使用 Spring 注入 UserService 進行業務邏輯處理
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private TestPasswordUtil testPasswordUtil;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //在Struts 2，如果要將前端表單屬性值，在Action綁定到某個VO，就必須於該action，定義getModel
     //定義getModel之後，表單屬性值會在Struts filter攔截到表單之時，先呼叫對應action的getModel，取得VO，再將表單資料寫入VO
@@ -52,7 +59,7 @@ public class LoginAction extends BaseAction {
         HttpServletRequest request = getRequest();
 
         // 如果用戶資料存在且登入 ID 正確
-        if (user != null && !"".equals(user.getLoginId())&& TestPasswordUtil.matches(request.getParameter("password"), user.getPassword())) {
+        if (user != null && !"".equals(user.getLoginId())&& bCryptPasswordEncoder.matches(request.getParameter("password"), user.getPassword())) {
             // 登入成功，將用戶資料放入 session 中
             getSession().setAttribute(ConstantName.SESSION_USER, user);
             return SUCCESS;
@@ -71,4 +78,20 @@ public class LoginAction extends BaseAction {
     public void setUser(User user) {
         this.user = user;
     }
+
+	public TestPasswordUtil getTestPasswordUtil() {
+		return testPasswordUtil;
+	}
+
+	public void setTestPasswordUtil(TestPasswordUtil testPasswordUtil) {
+		this.testPasswordUtil = testPasswordUtil;
+	}
+
+	public BCryptPasswordEncoder getbCryptPasswordEncoder() {
+		return bCryptPasswordEncoder;
+	}
+
+	public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
 }

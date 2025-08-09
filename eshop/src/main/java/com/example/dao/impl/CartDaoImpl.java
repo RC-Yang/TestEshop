@@ -78,7 +78,10 @@ public class CartDaoImpl implements CartDao {
 		
 		int rows = jdbcTemplate.update(sql, new Object[] {usercart.getUser().getLoginId(),
 				usercart.getProduct().getProdId()});
-		
+		//int rows = jdbcTemplate.update(sql, usercart.getUser().getLoginId(),
+		//usercart.getProduct().getProdId());
+		//這也可以
+
 		return rows;
 	}
 	
