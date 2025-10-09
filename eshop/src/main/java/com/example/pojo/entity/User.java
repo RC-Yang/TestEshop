@@ -37,8 +37,8 @@ public class User {
 	@Column(name="create_date")
     private Date createDate;
 	
-	@Column(name="user_type")
-	private Integer userType;
+	@Column(name="user_role")
+	private String userRole;
 
     // 取得使用者的 ID
     public String getId() {
@@ -100,12 +100,12 @@ public class User {
         this.createDate = createDate;
     }
 
-	public Integer getUserType() {
-		return userType;
+	public String getUserRole() {
+		return userRole;
 	}
 
-	public void setUserType(Integer userType) {
-		this.userType = userType;
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
 	}
-    
+
 }

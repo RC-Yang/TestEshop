@@ -29,19 +29,7 @@
 		<!-- 設定所有屬於該package的action，預設使用的攔截器堆疊 -->
 		<default-interceptor-ref name="globalStack" />
 
-		<global-results>
-			<result name="login" type="redirect">
-				/login.jsp
-			</result>
-			<result name="error" type="redirect">/error.jsp</result>
-		</global-results>
-
-        <!-- 任何 Action 如果在執行過程中拋出了 java.lang.Exception（或其子類別），
-        而且沒有被捕捉處理，就會直接轉到result="error" -->
-		<global-exception-mappings>
-			<exception-mapping exception="java.lang.Exception"
-				result="error" />
-		</global-exception-mappings>
+		
 	</package>
 	
 	<!-- 註解：include 不是將內容插入，而是解析並載入另一個配置檔 -->

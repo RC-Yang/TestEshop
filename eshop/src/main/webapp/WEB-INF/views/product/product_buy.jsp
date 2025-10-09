@@ -23,8 +23,16 @@
 				  fetch('<%= request.getContextPath() %>/cart/addToCart', {
 				    method: 'POST',
 				    headers: {
-				      'Content-Type': 'application/x-www-form-urlencoded'
+				      'Content-Type': 'application/x-www-form-urlencoded',
+				      'X-Requested-With': 'XMLHttpRequest'
 				    },
+				    //{ 'ContentType': 'application/x-www-form-urlencoded' }
+					//跟
+					//{ ContentType: 'application/x-www-form-urlencoded' }
+					//key都會被瀏覽器被解析成字串值ContentType，所以兩者才會一樣
+					//headers屬性，內容會全被寫入request header
+					//為何要叫做「headers」屬性，不直接叫header就好？上面一個key-value對就是一個header，這裡有兩個，故就是headers
+
 				    body: "prodId=<s:property value='productDetail[4]' />&userId=${session_user.loginId}"
 				  })
 					//res是javascript的httpResponse型別物件

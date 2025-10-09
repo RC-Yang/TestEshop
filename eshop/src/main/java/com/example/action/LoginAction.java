@@ -2,11 +2,9 @@ package com.example.action;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.example.TestPasswordUtil;
 import com.example.constant.ConstantName;
 import com.example.pojo.entity.User;
 import com.example.service.UserService;
@@ -24,9 +22,6 @@ public class LoginAction extends BaseAction {
     // 使用 Spring 注入 UserService 進行業務邏輯處理
     @Autowired
     private UserService userService;
-    
-    @Autowired
-    private TestPasswordUtil testPasswordUtil;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -78,14 +73,6 @@ public class LoginAction extends BaseAction {
     public void setUser(User user) {
         this.user = user;
     }
-
-	public TestPasswordUtil getTestPasswordUtil() {
-		return testPasswordUtil;
-	}
-
-	public void setTestPasswordUtil(TestPasswordUtil testPasswordUtil) {
-		this.testPasswordUtil = testPasswordUtil;
-	}
 
 	public BCryptPasswordEncoder getbCryptPasswordEncoder() {
 		return bCryptPasswordEncoder;

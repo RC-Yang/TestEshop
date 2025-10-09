@@ -124,6 +124,10 @@
 	      $.ajax({
 	        url: '<%=request.getContextPath()%>/order/updateOrderStateByOrdNum',
 	        method: 'POST',
+	        //Content-Type: application/x-www-form-urlencoded; charset=UTF-8或著multipart/form-data
+			//在JQuery ajax，前者會被JQuery，後者會被瀏覽器+contentType:false來自動添加
+			//所以根本不用自己設定
+
 	        //data: $(this).serialize(), //對表單資料做序列化成key-value對，以便傳遞
 	        //以下三行，主要用於表單含有多媒體資訊
 	        data:new FormData(this),

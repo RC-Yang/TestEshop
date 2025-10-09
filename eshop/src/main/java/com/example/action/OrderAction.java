@@ -43,7 +43,7 @@ public class OrderAction extends BaseAction{
 	public String queryOrderList() {
 		User user = (User)getSession().getAttribute(ConstantName.SESSION_USER);
 		
-		if(user.getUserType()==1) {
+		if(user.getUserRole().equals("ROLE_USER")) {
 			Pageable pageable = PageRequest.of(page-1, size, Sort.by("ordNumId").descending());
 			orderPageList = orderService.queryOrder(user.getLoginId(),pageable);
 		}else {

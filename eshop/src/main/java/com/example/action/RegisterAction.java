@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.pojo.entity.User;
 import com.example.service.UserService;
-import com.example.TestPasswordUtil;
 import com.example.constant.ConstantName;
 
 public class RegisterAction extends BaseAction {
@@ -23,7 +23,7 @@ public class RegisterAction extends BaseAction {
     private UserService userService;
     
     @Autowired
-    private TestPasswordUtil testPasswordUtil;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
      * 使用模型驅動來封裝 User 物件
@@ -63,9 +63,9 @@ public class RegisterAction extends BaseAction {
             user.setLoginId(request.getParameter("loginId"));
             user.setName(request.getParameter("loginId"));
             //給密碼hash+加鹽
-            user.setPassword(testPasswordUtil.hash(request.getParameter("password")));
+            user.setPassword(bCryptPasswordEncoder.encode(request.getParameter("password")));
             
-            user.setUserType(Integer.parseInt(request.getParameter("userType")));
+            user.setUserRole(request.getParameter("userRole"));
 
             // 呼叫 UserService 來保存使用者資料
             userService.addUser(user);
@@ -113,11 +113,11 @@ public class RegisterAction extends BaseAction {
         this.user = user;
     }
 
-	public TestPasswordUtil getTestPasswordUtil() {
-		return testPasswordUtil;
+	public BCryptPasswordEncoder getbCryptPasswordEncoder() {
+		return bCryptPasswordEncoder;
 	}
 
-	public void setTestPasswordUtil(TestPasswordUtil testPasswordUtil) {
-		this.testPasswordUtil = testPasswordUtil;
+	public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 }

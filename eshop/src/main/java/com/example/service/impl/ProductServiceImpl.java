@@ -2,6 +2,7 @@ package com.example.service.impl;
 
 import java.sql.Blob;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,12 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	@Transactional(transactionManager = "hibernateTxManager")
 	public Blob findProdImageByProdId(Integer prodId) {
-		return productRepository.findProdImageByProdId(prodId);
+		Optional<Blob> prodImageBlob = productRepository.findProdImageByProdId(prodId);
+		
+		if(prodImageBlob.isPresent()) {
+			return prodImageBlob.get();
+		}else {
+			return null;
+		}
 	}
 }

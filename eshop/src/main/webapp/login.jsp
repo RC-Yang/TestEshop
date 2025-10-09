@@ -26,9 +26,10 @@
     
     
     <script type="text/javascript">
-        function validateAndSubmit(type) {
+        function validateAndSubmit(e) {
             let loginId = $("input[name='loginId']").val().trim();
             let password = $("input[name='password']").val().trim();
+            let userRole = $("input[name='userRole']:checked").val();
 
             if (!loginId) {
                 alert("使用者名稱不能為空");
@@ -40,10 +41,10 @@
                 return;
             }
 
-            if(type==1){
+            if(e.target.id=="loginButton"){
             	$("#form").attr('action', '<%=request.getContextPath()%>/login/login');
             }
-            else if(type==2){
+            else if(e.target.id=="registerButton"){
             	$("#form").attr('action', '<%=request.getContextPath()%>/register/save');
             }
 
@@ -51,8 +52,8 @@
         }
         
         onload=function(){
-			document.querySelector("#registerButton").addEventListener("click",function(){
-				validateAndSubmit(2);
+			document.querySelector("#registerButton,#loginButton").addEventListener("click",function(e){
+				validateAndSubmit(e);
 			});
         }
     </script>
@@ -82,14 +83,14 @@
 	        <input type="password" class="form-control" id="password" name="password" required>
 	      </div>
 	      <div class="form-check form-check-inline">
-		  	<input class="form-check-input" type="radio" name="userType" id="user" value="1">
+		  	<input class="form-check-input" type="radio" name="userRole" id="user" value="ROLE_USER">
 		  	<label class="form-check-label" for="user">一般用戶</label>
 		</div>
 		<div class="form-check form-check-inline">
-		  	<input class="form-check-input" type="radio" name="userType" id="admin" value="2">
+		  	<input class="form-check-input" type="radio" name="userRole" id="admin" value="ROLE_ADMIN">
 		  	<label class="form-check-label" for="admin">管理者</label>
 		</div>
-	      <button type="button" class="btn btn-primary" onclick="validateAndSubmit(1)">登入</button>&nbsp;
+	      <button type="button" class="btn btn-primary" id="loginButton">登入</button>&nbsp;
 	      <button type="button" class="btn btn-success" id="registerButton">註冊</button>
 	    </form>
 	  </div>

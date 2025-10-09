@@ -24,13 +24,13 @@
 	        </a>
 	        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 	          <li><a class="dropdown-item" href="<%= request.getContextPath() %>/product/productList">商品列表</a></li>
-	          <c:if test="${session_user.userType eq 2}">
+	          <c:if test="${session_user.userRole eq 'ROLE_ADMIN'}">
 	          	<li><a class="dropdown-item" href="#">商品管理</a></li>
 	          </c:if>
 	        </ul>
 	      </li>
 
-	      <c:if test="${session_user.userType eq 1}">
+	      <c:if test="${session_user.userRole eq 'ROLE_USER'}">
 		      <li class="nav-item">
 		        <a class="nav-link" href="<%= request.getContextPath() %>/cart/queryCart?loginId=${session_user.loginId}">購物車</a>
 		      </li>
@@ -41,10 +41,10 @@
 	          訂單資訊
 	        </a>
 	        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-	        	<c:if test="${session_user.userType eq 1}">
+	        	<c:if test="${session_user.userRole eq 'ROLE_USER'}">
 	          		<li><a class="dropdown-item" href="<%= request.getContextPath() %>/order/queryOrderList?page=1&size=10">訂單詳細資訊</a></li>
 	          	</c:if>
-	          <c:if test="${session_user.userType eq 2}">
+	          <c:if test="${session_user.userRole eq 'ROLE_ADMIN'}">
 	          	<li><a class="dropdown-item" href="<%= request.getContextPath() %>/order/queryAllOrder">訂單詳細資訊</a></li>
 	          	<li><a class="dropdown-item" href="#">訂單狀態更新</a></li>
 	          </c:if>
