@@ -3,8 +3,6 @@ package com.example.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +13,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.constant.ConstantName;
+import com.example.dto.CartForm;
 import com.example.dto.CartItem;
 import com.example.pojo.entity.User;
 import com.example.service.OrderService;
@@ -26,34 +25,28 @@ import ecpay.payment.integration.domain.AioCheckOutALL;
 public class PurchaseAction extends BaseAction{
 	
 	@Autowired
-	private PurchaseService purcahseService;
-	@Autowired
 	private OrderService orderService;
 	
 	private Object[] product;
 	
-	private List<CartItem> cartItem; 
+	//private List<CartItem> cartItem = new ArrayList<>();
+	private CartForm model = new CartForm();
 	
 	private AllInOne all = new AllInOne("");
-	
-	private List<Integer> selectedIndexes;
 
 	public PurchaseAction() throws Exception {
 		super();
 	}
-
-	public List<CartItem> getSelectedCartItems() {
-	    return selectedIndexes.stream()
-	        .filter(i -> i >= 0 && i < cartItem.size())
-	        .map(i -> cartItem.get(i))
-	        .collect(Collectors.toList());
+	
+	public CartForm getModel() {
+		return model;
 	}
 
 	public void purchase() throws IOException {
 		
 		User user = (User)getSession().getAttribute(ConstantName.SESSION_USER);
 
-		String orderNum = orderService.createOrder(user.getLoginId(), (List<CartItem>)getSession().getAttribute("cartItem"));
+		String orderNum = orderService.createOrder(user.getLoginId(), (List<CartItem>)getSession().getAttribute("chosenCartItems"));
 
 		getSession().setAttribute("orderNum", orderNum);
 		
@@ -85,7 +78,19 @@ public class PurchaseAction extends BaseAction{
 	
 	public String goToPurchase() {
 		
-		getSession().setAttribute("cartItem", getSelectedCartItems());
+		List<CartItem> cartitemList = model.getCartItem();
+		
+		for (int i = 0; i < cartitemList.size(); i++) {
+			CartItem it = model.getCartItem().get(i);
+		    System.out.printf("[%d] prodId=%s, qty=%s, selected=%s%n",
+		        i, it.getProdId(), it.getQuantity(), it.getSelected());
+		}
+		
+		List<CartItem> chosen = model.getCartItem().stream()
+	            .filter(it -> Boolean.TRUE.equals(it.getSelected()))
+	            .collect(Collectors.toList());
+		
+		getSession().setAttribute("chosenCartItems", chosen);
 		
 		return SUCCESS;
 	}
@@ -107,21 +112,4 @@ public class PurchaseAction extends BaseAction{
 	public void setProduct(Object[] product) {
 		this.product = product;
 	}
-
-	public List<CartItem> getCartItem() {
-		return cartItem;
-	}
-
-	public void setCartItem(List<CartItem> cartItem) {
-		this.cartItem = cartItem;
-	}
-
-	public List<Integer> getSelectedIndexes() {
-		return selectedIndexes;
-	}
-
-	public void setSelectedIndexes(List<Integer> selectedIndexes) {
-		this.selectedIndexes = selectedIndexes;
-	}
-
 }

@@ -16,19 +16,14 @@ public class LoginAction extends BaseAction {
 
     private static final long serialVersionUID = 1L;
 
-    // 封裝登入所需的 User 資料
     private User user;
 
-    // 使用 Spring 注入 UserService 進行業務邏輯處理
     @Autowired
     private UserService userService;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    //在Struts 2，如果要將前端表單屬性值，在Action綁定到某個VO，就必須於該action，定義getModel
-    //定義getModel之後，表單屬性值會在Struts filter攔截到表單之時，先呼叫對應action的getModel，取得VO，再將表單資料寫入VO
-    //表單屬性，可以不用struts tag來表示
     @Override
     public User getModel() {
         if (user == null) {

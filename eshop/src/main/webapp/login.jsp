@@ -52,7 +52,10 @@
         }
         
         onload=function(){
-			document.querySelector("#registerButton,#loginButton").addEventListener("click",function(e){
+			document.querySelector("#registerButton").addEventListener("click",function(e){
+				validateAndSubmit(e);
+			});
+			document.querySelector("#loginButton").addEventListener("click",function(e){
 				validateAndSubmit(e);
 			});
         }

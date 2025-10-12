@@ -23,7 +23,7 @@ public class CartService {
 	UserDao userDao;
 	
 	@Transactional(transactionManager = "jdbcTxManager")
-	public int addToCart(Integer userId,Integer prodId) {
+	public int addToCart(Integer userId,Integer prodId,Integer quantity) {
 	
 		int result = 0;
 
@@ -37,12 +37,16 @@ public class CartService {
 		
 		usercart.setProduct(p);
 		usercart.setUser(user);
-		
+		usercart.setQuantity(quantity);
+
 		Object[] obj = cartDao.queryCart(userId.toString(), prodId);
 		
 		if(obj==null) {
 			result = cartDao.addToCart(usercart);
 		}else {
+			quantity=quantity+(Integer)obj[2];
+			usercart.setQuantity(quantity);
+			
 			result = cartDao.updateCart(usercart);
 		}	
 

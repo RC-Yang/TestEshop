@@ -20,13 +20,16 @@ public class CartDaoImpl implements CartDao {
 		
 		String sql = "INSERT INTO user_cart (user_id, prod_id,quantity) VALUES (?, ?, ?)";
         return jdbcTemplate.update(sql, usercart.getUser().getLoginId(),
-        		usercart.getProduct().getProdId(),usercart.getQuantity()==null?1:usercart.getQuantity()+1);
+        		usercart.getProduct().getProdId(),usercart.getQuantity()==null?1:usercart.getQuantity());
 	}
 
 	@Override
 	public List<Object[]> queryCart(String loginId) {
-		String sql = "SELECT p.prod_name,p.prod_price, uc.quantity,p.prod_id FROM user_cart uc join "
-				+ "user u "
+		String sql = "SELECT p.prod_name,"
+				+ "p.prod_price, "
+				+ "uc.quantity,"
+				+ "p.prod_id "
+				+ "FROM user_cart uc join user u "
 				+ "on uc.user_id=u.login_id "
 				+ "join product p "
 				+ "on uc.prod_id=p.prod_id "
@@ -43,8 +46,11 @@ public class CartDaoImpl implements CartDao {
 	
 	public Object[] queryCart(String loginId,Integer prodId) {
 		//寫成A JOIN B JOIN C，解析器無法直接確定或預設某種JOIN方式，是因為可能的JOIN方法太多了
-		String sql = "SELECT p.prod_name,p.prod_price, uc.quantity,p.prod_id FROM user_cart uc join "
-				+ "user u "
+		String sql = "SELECT p.prod_name"
+				+ ",p.prod_price, "
+				+ "uc.quantity,"
+				+ "p.prod_id "
+				+ "FROM user_cart uc join user u "
 				+ "on uc.user_id=u.login_id "
 				+ "join product p "
 				+ "on uc.prod_id=p.prod_id "
@@ -73,10 +79,12 @@ public class CartDaoImpl implements CartDao {
 	}
 	
 	public int updateCart(UserCart usercart) {
-		String sql = "UPDATE user_cart SET quantity = quantity + 1"
+		String sql = "UPDATE user_cart SET quantity = ?"
 				+ " WHERE user_id = ? AND prod_id = ?";
 		
-		int rows = jdbcTemplate.update(sql, new Object[] {usercart.getUser().getLoginId(),
+		int rows = jdbcTemplate.update(sql, new Object[] {
+				usercart.getQuantity(),
+				usercart.getUser().getLoginId(),
 				usercart.getProduct().getProdId()});
 		//int rows = jdbcTemplate.update(sql, usercart.getUser().getLoginId(),
 		//usercart.getProduct().getProdId());

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,21 +27,10 @@
 				      'Content-Type': 'application/x-www-form-urlencoded',
 				      'X-Requested-With': 'XMLHttpRequest'
 				    },
-				    //{ 'ContentType': 'application/x-www-form-urlencoded' }
-					//跟
-					//{ ContentType: 'application/x-www-form-urlencoded' }
-					//key都會被瀏覽器被解析成字串值ContentType，所以兩者才會一樣
-					//headers屬性，內容會全被寫入request header
-					//為何要叫做「headers」屬性，不直接叫header就好？上面一個key-value對就是一個header，這裡有兩個，故就是headers
-
-				    body: "prodId=<s:property value='productDetail[4]' />&userId=${session_user.loginId}"
+				    body: "prodId=<s:property value='productDetail[4]' />&userId=${session_user.loginId}&quantity="+document.getElementById('quantity').value
 				  })
-					//res是javascript的httpResponse型別物件
-				  	//res.json()是httpresponse body(這為json格式，因Struts 2設定檔有相關設定)，轉成json格式的普通js物件
-					//return 則是在promise物件狀態改為fulfilled時，再將該js物件return出來
 				  .then((res)=>{return res.json();})
-				  //這個data是json格式的js物件
-				  //在action加入的字串屬性名-值對，就在該物件內，可直接用字串對應的屬性名將其取出
+				  
 				  .then((data) => {
 						if(data.message=='商品成功加入購物車！'){
 							  var myModal = new bootstrap.Modal(document.querySelector('#modal1'));
@@ -91,11 +81,43 @@
 	    <h2 class="fw-bold"><s:property value="productDetail[0]" /></h2>
 	    <h3 class="mb-4"><s:property value="productDetail[1]" /></h3>
 	
-	    <h3 class="mb-4"><s:property value="productDetail[2]" /></h3d>
+	    <h3 class="mb-4"><s:property value="productDetail[2]" /></h3>
 	    <h3 class="mb-4">$<span class="text-danger"><s:property value="productDetail[3]" /></span>元</h3>
 	
+		
+		<c:set var="amount1" value="<s:property value='productDetail[5]' />"/>
+		<s:set var="amount1" scope="request" value="<s:property value='productDetail[5]' />"/>
+		<s:set var="amount" scope="request" value="%{productDetail[5]}"/>
+		已選取
+		<select class="form-select d-inline-block w-auto" id="quantity">	
+			<c:choose>
+				<c:when test="${amount==0}">
+					<option disabled>0</option>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="i" begin="1" end="${amount}">
+						<c:if test="${i==1}">
+							<option value="${i}" selected>${i}</option>
+						</c:if>
+						<c:if test="${i!=1}">
+							<option value="${i}">${i}</option>
+						</c:if>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+		</select>
+		件商品
+		
+		<p class="mb-4">目前還剩<s:property value="productDetail[5]" />個商品</p>
 	    <div class="d-grid gap-2 d-md-block">
-	    	<a id="addToCart" class="btn btn-primary me-2">加入購物車</a>
+	    <c:choose>
+			<c:when test="${amount==0}">
+	    		<a id="addToCart" class="btn btn-primary me-2 disabled" aria-disabled="true">加入購物車</a>
+	    	</c:when>
+			<c:otherwise>
+				<a id="addToCart" class="btn btn-primary me-2">加入購物車</a>
+			</c:otherwise>
+		</c:choose>
 	    	<a id="collect" class="btn btn-secondary me-2">收藏</a>
 	    </div>
 	  </div>

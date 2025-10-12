@@ -28,7 +28,7 @@
             - 當輸入無效（input）時，重新導向 `/login.jsp`（登入頁面）
         -->
         <action name="logout" class="com.example.action.HomeAction" method="logOut">
-            <result name="input" type="redirect">/login.jsp</result>
+            <result name="login" type="redirect">/login.jsp</result>
         </action>
 
         <!-- 

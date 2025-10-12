@@ -7,6 +7,7 @@
 	<meta charset="UTF-8">
 	<!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -42,28 +43,27 @@
 		  <tbody>
 		  	 
 		  	  		<% int index = 0; %>
-				  <s:iterator value="cartList" var="cart" status="i">
+				  <s:iterator value="cartList" var="cart" status="st">
 				    <tr>
-				      
 					      <td><s:property value="#cart[0]" /></td>
 					      <td><s:property value="#cart[1]" /></td>
 					      <td>
-					      	<input type="hidden" name='<%="cartItem[" + index + "].prodId" %>'
-					      	 value="<s:property value="#cart[3]" />" id="prodId_<%=index%>"/>
-					      	<select class="form-select" name='<%="cartItem[" + index + "].quantity" %>'
-					      			id="quantity_<%=index%>">
-					      		<s:iterator begin="1" end="%{#cart[2]}" var="j">
-								    <option value="<s:property value='#j' />"
-								      <s:if test="#j == 1">selected</s:if>>
-								      <s:property value="#j" />
+					      	<input type="hidden"
+							       name="cartItem[<s:property value='#st.index'/>].prodId"
+							       value="<s:property value='#cart[3]'/>"
+							       id="cartItem_<s:property value='#st.index'/>_prodId">
+					      	<select class="form-select" name="cartItem[<s:property value='#st.index'/>].quantity">
+					      		<s:iterator begin="1" end="%{#cart[2]}" var="i">
+								    <option value="<s:property value='#i' />"
+								      <s:if test="#i == 1">selected</s:if>>
+								      <s:property value="#i" />
 								    </option>
-							  </s:iterator>
+							  	</s:iterator>
 					      	</select>
 					      </td>
 					      <td>
 				      		<div class="form-check p-0 m-0 d-flex justify-content-center align-items-center">
-							  <input class="form-check-input" type="checkbox" checked id="checkbox_<%=index%>"
-							  	name='selectedIndexes' value="<%= index %>">
+				      			<s:checkbox theme="simple" class="form-check-input" name="cartItem[%{#st.index}].selected" fieldValue="true"/>
 							</div>
 					      </td>
 				    </tr>

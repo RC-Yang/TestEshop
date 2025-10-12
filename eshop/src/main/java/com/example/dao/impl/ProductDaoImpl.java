@@ -24,7 +24,7 @@ public class ProductDaoImpl implements ProductDao{
 
 	@Override
 	public Object[] queryProductById(Integer id) {
-		String hql = "select p.prodType.prodType,p.prodLine.prodLine,p.prodName,p.prodPrice,p.prodId FROM Product p where p.prodId=:id";
+		String hql = "select p.prodType.prodType,p.prodLine.prodLine,p.prodName,p.prodPrice,p.prodId,p.amount.amount FROM Product p where p.prodId=:id";
 		Object[] product = (Object[])sessionFactory.getCurrentSession().createQuery(hql)
 							.setParameter("id", id).getResultList().get(0);
 		return product;

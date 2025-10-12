@@ -36,6 +36,9 @@ public class Product {
 	@Lob
     @Column(name = "prod_image")
     private Blob prodImage;
+	
+	@OneToOne(mappedBy="product")
+	private ProductAmount amount;
 
 	public Integer getProdId() {
 		return prodId;
@@ -79,6 +82,12 @@ public class Product {
 	}
 	public void setProdImage(Blob prodImage) {
 		this.prodImage = prodImage;
+	}
+	public ProductAmount getAmount() {
+		return amount;
+	}
+	public void setAmount(ProductAmount amount) {
+		this.amount = amount;
 	}
 
 }

@@ -22,9 +22,10 @@ public class CartAction extends BaseAction{
 		HttpServletRequest request = getRequest();
 		String userId = request.getParameter("userId");
 		String prodId = request.getParameter("prodId");
-		//String quantity = request.getParameter("quantity");
+		String quantity = request.getParameter("quantity");
 		
-		int result = cartservice.addToCart(Integer.parseInt(userId),Integer.parseInt(prodId));
+		int result = cartservice.addToCart(Integer.parseInt(userId),Integer.parseInt(prodId)
+				,Integer.parseInt(quantity));
 		
 		if(result>0) {
 			message="商品成功加入購物車！";			
