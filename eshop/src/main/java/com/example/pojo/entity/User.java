@@ -1,6 +1,8 @@
 package com.example.pojo.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -39,6 +41,9 @@ public class User {
 	
 	@Column(name="user_role")
 	private String userRole;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
     // 取得使用者的 ID
     public String getId() {
@@ -106,6 +111,14 @@ public class User {
 
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 }

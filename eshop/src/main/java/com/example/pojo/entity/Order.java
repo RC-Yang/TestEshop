@@ -28,8 +28,8 @@ public class Order {
 	@Column(name="amount")
 	private Integer amount;
 	@ManyToOne
-	@JoinColumn(name="cust_id")
-	private Customer customer;
+	@JoinColumn(name="login_id")
+	private User user;
 	@Column(name="state")
 	private String state;
 
@@ -63,11 +63,11 @@ public class Order {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
-	public Customer getCustomer() {
-		return customer;
+	public User User() {
+		return user;
 	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public String getState() {
 		return state;

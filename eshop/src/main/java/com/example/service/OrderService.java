@@ -17,11 +17,13 @@ import org.springframework.stereotype.Service;
 import com.example.dao.CustomerRepository;
 import com.example.dao.OrderRepository;
 import com.example.dao.ProductRepository;
+import com.example.dao.UserRepository;
 import com.example.dto.CartItem;
 import com.example.dto.OrderItems;
 import com.example.pojo.entity.Customer;
 import com.example.pojo.entity.Order;
 import com.example.pojo.entity.Product;
+import com.example.pojo.entity.User;
 
 @Service
 public class OrderService {
@@ -33,14 +35,14 @@ public class OrderService {
     private ProductRepository productRepository;
     
     @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
     
     @Transactional
     public String createOrder(String custId, List<CartItem> cartItems) {
 
     	String orderNum = "ORD" + System.currentTimeMillis();
     	
-    	Optional<Customer> customer = customerRepository.findByLoginId(custId);
+    	Optional<User> user = userRepository.findByLoginId(custId);
 
         for (CartItem item : cartItems) {
         Product product = productRepository.findById(Integer.parseInt(item.getProdId()))
@@ -52,7 +54,7 @@ public class OrderService {
             orderRow.setAmount(product.getProdPrice() * 
             		Integer.parseInt(item.getQuantity()));
             orderRow.setProduct(product);
-            orderRow.setCustomer(customer.get());
+            orderRow.setUser(user.get());
             orderRow.setState("未付款");
 
             orderRepository.save(orderRow); // 多筆商品各自存一筆，綁定同一個 orderNum
@@ -62,20 +64,20 @@ public class OrderService {
 
     @Transactional
     public List<Order> queryOrder(String loginId){
-    	Customer customer = customerRepository.findByLoginId(loginId)
+    	User user = userRepository.findByLoginId(loginId)
     		    .orElseThrow(() -> new RuntimeException("查無此用戶"));
 
-		List<Order> result = orderRepository.findByCustomer_CustId(customer.getCustId());
+		List<Order> result = orderRepository.findByUser_LoginId(user.getLoginId());
 		
 		return result;
     }
     
     @Transactional
     public Page<Order> queryOrder(String loginId,Pageable page){
-    	Customer customer = customerRepository.findByLoginId(loginId)
+    	User user = userRepository.findByLoginId(loginId)
     		    .orElseThrow(() -> new RuntimeException("查無此用戶"));
 
-		Page<Order> result = orderRepository.findByCustomer_CustId(customer.getCustId(),page);
+		Page<Order> result = orderRepository.findByUser_LoginId(user.getLoginId(),page);
 		
 		return result;
     }

@@ -59,10 +59,10 @@ public class UserDaoImpl implements UserDao {
      */
     private User getUserByHibernate(User user) {
         // 定義 HQL 查詢語句
-        String hql = "from User where loginId = :loginId";
+        String hql = "from User where name = :name";
         // 使用 Hibernate 的 Query 物件來執行 HQL 查詢
         Query<User> query = getSession().createQuery(hql, User.class);
-        query.setParameter("loginId", user.getLoginId());
+        query.setParameter("name", user.getLoginId());
         //query.setParameter("password", user.getPassword());
         List<User> userList = query.list();
 

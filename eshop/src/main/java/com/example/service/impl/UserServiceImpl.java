@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
     	 String maxIdStr = userRepository.findMaxId();
          int maxId = (maxIdStr != null) ? Integer.parseInt(maxIdStr) : 0;
          user.setId(String.valueOf(maxId + 1));
+         user.setLoginId(String.valueOf(maxId + 1));
 
          userRepository.save(user);
     }

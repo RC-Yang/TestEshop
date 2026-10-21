@@ -60,7 +60,6 @@ public class RegisterAction extends BaseAction {
             setUserCreateDate(user);
             HttpServletRequest request = ServletActionContext.getRequest();
             
-            user.setLoginId(request.getParameter("loginId"));
             user.setName(request.getParameter("loginId"));
             //給密碼hash+加鹽
             user.setPassword(bCryptPasswordEncoder.encode(request.getParameter("password")));

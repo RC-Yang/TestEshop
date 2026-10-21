@@ -21,9 +21,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("UPDATE Order o SET o.state = :state WHERE o.ordNum = :ordNum")
     void updateOrderState(@Param("ordNum") String ordNum, @Param("state") String state);
 	
-	Page<Order> findByCustomer_CustId(Integer custId, Pageable pageable);
+	Page<Order> findByUser_LoginId(String loginId, Pageable pageable);
 	
-	List<Order> findByCustomer_CustId(Integer custId);
+	List<Order> findByUser_LoginId(String loginId);
 	
 	@Query("SELECT distinct o.ordNum, o.state FROM Order o")
 	List<Object> findStateAndOrderNum();

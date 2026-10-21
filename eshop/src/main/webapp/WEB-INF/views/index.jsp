@@ -64,7 +64,7 @@
 	        <a class="nav-link" href="<%= request.getContextPath() %>/home/logout">登出</a>
 	      </li>
 	      </ul>
-	      你好！${session_user.loginId}！
+	      你好！${session_user.name}！
 		  <form class="d-flex justify-content-center align-items-center">
 		      <input class="form-control mx-1" type="search" placeholder="Search" aria-label="Search">
 		      <button class="btn btn-outline-success mx-1" type="submit">Search</button>
