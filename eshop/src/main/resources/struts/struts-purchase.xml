@@ -20,14 +20,13 @@
 	            class="com.example.action.PurchaseAction" 
 	            method="goToCashSuccess">
 	        
-	        <result name="success">/WEB-INF/views/purchase/goToCashSuccess.jsp</result>
+	        <result name="success">/WEB-INF/views/purchase/cashFinish.jsp</result>
 	    </action>
 	    
 	     <action name="cashFinish" 
 	            class="com.example.action.PurchaseAction" 
 	            method="cashFinish">
-	        
-	        <result name="success">/WEB-INF/views/purchase/cashFinish.jsp</result>
+
 	    </action>
     </package>
 </struts>
