@@ -14,13 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import com.example.dao.CustomerRepository;
 import com.example.dao.OrderRepository;
 import com.example.dao.ProductRepository;
 import com.example.dao.UserRepository;
 import com.example.dto.CartItem;
 import com.example.dto.OrderItems;
-import com.example.pojo.entity.Customer;
 import com.example.pojo.entity.Order;
 import com.example.pojo.entity.Product;
 import com.example.pojo.entity.User;

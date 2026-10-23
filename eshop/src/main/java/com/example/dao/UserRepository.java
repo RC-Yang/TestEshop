@@ -12,4 +12,5 @@ public interface UserRepository  extends JpaRepository<User, String> {
     String findMaxId();
 	
 	Optional<User> findByLoginId(String loginId);
+	boolean existsByName(String name);
 }

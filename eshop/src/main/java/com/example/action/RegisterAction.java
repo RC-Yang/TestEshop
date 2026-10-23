@@ -36,14 +36,6 @@ public class RegisterAction extends BaseAction {
         }
         return user;
     }
-
-    /**
-     * 跳轉至註冊頁面
-     * @return 返回註冊頁面
-     */
-    public String register() {
-        return SUCCESS;
-    }
     
     /**
      * 處理註冊邏輯
@@ -70,17 +62,14 @@ public class RegisterAction extends BaseAction {
             userService.addUser(user);
 
             // 註冊成功，將訊息設置到 session
-            getSession().setAttribute(ConstantName.SESSION_USER_MSG, "註冊成功，請登入");
-            
             getSession().setAttribute("registerResult", "註冊成功，請登入");
-            //這裡不可用request，因為redirect會導致request重新產生，進而使原本request的資料丟失
         } catch (Exception e) {
             // 註冊失敗，將錯誤訊息設置到 session
-            getSession().setAttribute(ConstantName.SESSION_USER_MSG, "註冊失敗，請重試");
-            getSession().setAttribute("registerResult", "註冊失敗，請重試");
+        	String errorMessage = e.getMessage();
+
+            getSession().setAttribute("registerResult", errorMessage);
             return INPUT;
         }
-
         return SUCCESS;
     }
 

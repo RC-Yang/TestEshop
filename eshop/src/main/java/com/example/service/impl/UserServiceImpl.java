@@ -1,8 +1,5 @@
 package com.example.service.impl;
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +9,6 @@ import com.example.dao.UserRepository;
 import com.example.pojo.entity.User;
 import com.example.service.UserService;
 
-/**
- * UserService 的實作類別，處理與使用者相關的業務邏輯。
- * 這個類別實作了 UserService 介面，並使用 UserDao 來進行資料庫操作。
- * 註解：@Service 標註此類別為 Spring 的服務層 Bean。
- */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -47,6 +39,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void addUser(User user) {
+    	
+    	if (userRepository.existsByName(user.getName())) {
+            throw new IllegalArgumentException("使用者名稱已存在");
+        }
+
         // 呼叫 UserDao 來新增使用者
     	 String maxIdStr = userRepository.findMaxId();
          int maxId = (maxIdStr != null) ? Integer.parseInt(maxIdStr) : 0;
