@@ -41,8 +41,6 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		  	 
-		  	  		<% int index = 0; %>
 				  <s:iterator value="cartList" var="cart" status="st">
 				    <tr>
 					      <td><s:property value="#cart[0]" /></td>
@@ -67,9 +65,7 @@
 							</div>
 					      </td>
 				    </tr>
-				    <% index++; %>
-				  </s:iterator>
-			  
+				  </s:iterator>		  
 		  </tbody>
 		</table>
 		</form>
