@@ -10,7 +10,12 @@
 	        
 	        <result name="success" type="json"/>
 	    </action>
-	    
+	    <action name="removeFromCart" 
+	            class="com.example.action.CartAction" 
+	            method="removeFromCart">
+	        
+	        <result name="success" type="json"/>
+	    </action>
 	    <action name="queryCart" 
 	            class="com.example.action.CartAction" 
 	            method="queryCart">

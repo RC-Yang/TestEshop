@@ -1,95 +1,157 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<!-- Bootstrap CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-	
-	<!-- jQuery -->
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-	
-	<!-- DataTables CSS -->
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-	
-	<!-- DataTables Bootstrap5 整合樣式 -->
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-	
-	<!-- DataTables JS -->
-	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-	
-	<!-- DataTables Bootstrap5 JS -->
-	<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-	<title>購物車清單</title>
+<meta charset="UTF-8">
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<!-- DataTables Bootstrap5 整合樣式 -->
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+<!-- DataTables JS -->
+<script
+	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables Bootstrap5 JS -->
+<script
+	src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<title>購物車清單</title>
 </head>
 <body>
-	<%@ include file="../exampleNav.jspf" %>
-    <h2 class="my-2">購物車清單</h2>
+	<%@ include file="../exampleNav.jspf"%>
+	<h2 class="my-2">購物車清單</h2>
 
 	<div class="w-75 mx-auto">
-	 	<form action="<%= request.getContextPath() %>/purchase/goToPurchase" method="post" id="purchaseForm">
-		<table id="myTable" class="table table-striped table-bordered">
-		  <thead class="table-primary">
-		    <tr>
-		      <th>商品名稱</th>
-		      <th>價格</th>
-		      <th>數量</th>
-		      <th>是否購買</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-				  <s:iterator value="cartList" var="cart" status="st">
-				    <tr>
-					      <td><s:property value="#cart[0]" /></td>
-					      <td><s:property value="#cart[1]" /></td>
-					      <td>
-					      	<input type="hidden"
-							       name="cartItem[<s:property value='#st.index'/>].prodId"
-							       value="<s:property value='#cart[3]'/>"
-							       id="cartItem_<s:property value='#st.index'/>_prodId">
-					      	<select class="form-select" name="cartItem[<s:property value='#st.index'/>].quantity">
-					      		<s:iterator begin="1" end="%{#cart[2]}" var="i">
-								    <option value="<s:property value='#i' />"
-								      <s:if test="#i == 1">selected</s:if>>
-								      <s:property value="#i" />
-								    </option>
-							  	</s:iterator>
-					      	</select>
-					      </td>
-					      <td>
-				      		<div class="form-check p-0 m-0 d-flex justify-content-center align-items-center">
-				      			<s:checkbox theme="simple" class="form-check-input" name="cartItem[%{#st.index}].selected" fieldValue="true"/>
-							</div>
-					      </td>
-				    </tr>
-				  </s:iterator>		  
-		  </tbody>
-		</table>
+		<form action="<%=request.getContextPath()%>/purchase/goToPurchase"
+			method="post" id="purchaseForm">
+			<table id="myTable" class="table table-striped table-bordered">
+				<thead class="table-primary">
+					<tr>
+						<th>商品名稱</th>
+						<th>價格</th>
+						<th>數量</th>
+						<th>是否購買</th>
+						<th>是否刪除</th>
+					</tr>
+				</thead>
+				<tbody>
+					<s:iterator value="cartList" var="cart" status="st">
+						<tr>
+							<td><s:property value="#cart[0]" /></td>
+							<td><s:property value="#cart[1]" /></td>
+							<td><input type="hidden"
+								name="cartItem[<s:property value='#st.index'/>].prodId"
+								value="<s:property value='#cart[3]'/>"
+								id="cartItem_<s:property value='#st.index'/>_prodId"> <select
+								class="form-select"
+								name="cartItem[<s:property value='#st.index'/>].quantity">
+									<s:iterator begin="1" end="%{#cart[2]}" var="i">
+										<option value="<s:property value='#i' />"
+											<s:if test="#i == 1">selected</s:if>>
+											<s:property value="#i" />
+										</option>
+									</s:iterator>
+							</select></td>
+							<td>
+								<div
+									class="form-check p-0 m-0 d-flex justify-content-center align-items-center">
+									<s:checkbox theme="simple" class="form-check-input"
+										name="cartItem[%{#st.index}].selected" fieldValue="true" />
+								</div>
+							</td>
+							<td>
+								<div
+									class="form-check p-0 m-0 d-flex justify-content-center align-items-center">
+										<input type="checkbox"
+								           class="form-check-input deleteCartCheckbox"
+								           value="<s:property value='#cart[3]' />">
+								</div>
+							</td>
+						</tr>
+					</s:iterator>
+				</tbody>
+			</table>
 		</form>
 	</div>
 	<div class="text-center">
 		<button type="button" class="btn btn-success" onclick="purchase();">購買</button>
-		<a href="<%= request.getContextPath() %>/product/productList" class="btn btn-secondary">
-		  返回商品清單
-		</a>
+		<a href="<%=request.getContextPath()%>/product/productList"
+			class="btn btn-secondary"> 返回商品清單 </a>
+		<button type="button" id="deleteSelectedBtn" class="btn btn-danger">刪除選取商品</button>
 	</div>
 </body>
 <script>
-  $(document).ready(function() {
-    $('#myTable').DataTable({
-      // optional: 調整語言（中文化）
-      language: {
-        url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/zh-HANT.json"
-      }
-    });
-  });
-  
-  function purchase(){
-	  document.getElementById("purchaseForm").submit();
-  }
+	$(document)
+			.ready(
+					function() {
+						$('#myTable')
+								.DataTable(
+										{
+											// optional: 調整語言（中文化）
+											language : {
+												url : "https://cdn.datatables.net/plug-ins/1.13.6/i18n/zh-HANT.json"
+											}
+										});
+					});
+
+	function purchase() {
+		document.getElementById("purchaseForm").submit();
+	}
+	
+	$("#deleteSelectedBtn").click(function() {
+
+	    const prodIds = Array.from(
+	    	    document.querySelectorAll(".deleteCartCheckbox:checked")
+	    ).map(el => el.value);
+
+	    if (prodIds.length === 0) {
+	        alert("請先選擇要刪除的商品");
+	        return;
+	    }
+
+	    if (!confirm("確定刪除選取的商品嗎？")) {
+	        return;
+	    }
+
+	    $.ajax({
+	        url: "<%= request.getContextPath() %>/cart/removeFromCart",
+	        type: "POST",
+	        traditional: true,
+	        data: {
+	        	userId:${session_user.loginId},
+	            prodIds: prodIds
+	        },
+	        dataType: "json",
+
+	        success: function (response) {
+	            if (response.message=='商品成功從購物車移除！') {
+	            	location.reload();
+	                alert(response.message);
+	            } else {
+	                alert(response.message || "刪除失敗");
+	            }
+	        },
+
+	        error: function () {
+	            alert("刪除失敗，請稍後再試");
+	        }
+	    });
+	});
 </script>
 
 </html>

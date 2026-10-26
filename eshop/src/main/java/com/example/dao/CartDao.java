@@ -9,4 +9,5 @@ public interface CartDao {
 	public List<Object[]> queryCart(String loginId);
 	public Object[] queryCart(String loginId,Integer prodId);
 	public int updateCart(UserCart usercart);
+	public int removeFromCart(UserCart usercart);
 }

@@ -54,6 +54,28 @@ public class CartService {
 	}
 	
 	@Transactional(transactionManager = "jdbcTxManager")
+	public int removeFromCart(Integer userId, List<Integer> prodIds) {
+
+		int result = 0;
+		
+		User user = new User();
+		user.setLoginId(userId.toString());
+		
+		for (Integer prodId : prodIds) {
+
+	        Product p = new Product();
+	        p.setProdId(prodId);
+
+	        UserCart usercart = new UserCart();
+	        usercart.setUser(user);
+	        usercart.setProduct(p);
+
+	        result += cartDao.removeFromCart(usercart);
+	    }
+		return result;
+	}
+	
+	@Transactional(transactionManager = "jdbcTxManager")
 	public List<Object[]> queryCart(String loginId) {
 		return cartDao.queryCart(loginId);
 	}
