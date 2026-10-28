@@ -3,7 +3,7 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
     "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-    <package name="home" extends="json-default" namespace="/home">
+    <package name="home" extends="default" namespace="/home">
         <!-- 
             這個 package（封裝作用域）名稱為 "home"，對應 /home 命名空間，
             用於處理首頁及相關功能的請求。
@@ -31,9 +31,11 @@
             <result name="login" type="redirect">/login.jsp</result>
         </action>
 
-        <action name="keepAlive" class="com.example.action.HomeAction" method="keepAlive">
+    </package>
+    
+    <package name="home1" extends="json-default" namespace="/home/test">
+    	<action name="keepAlive" class="com.example.action.HomeAction" method="keepAlive">
 		    <result name="success" type="json" />
 		</action>
-
     </package>
 </struts>

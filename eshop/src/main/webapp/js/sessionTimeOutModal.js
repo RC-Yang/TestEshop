@@ -44,14 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // 如果超過 30 分鐘都沒有處理，強制轉址到登出頁
       if (elapsedMinutes >= 2) {
         clearInterval(checkInterval);
-        window.location.href = '/logout';
+        window.location.href = '/eshop/home/logout';
       }
     }, 10000);
 	
 	    // 3. 點擊「延長連線」按鈕
 	    document.getElementById('btnExtendSession').addEventListener('click', () => {
 	      // 發送 AJAX ping 續約伺服器端 Session
-	      fetch('/eshop/home/keepAlive', {
+	      fetch('/eshop/home/test/keepAlive', {
 	        method: 'GET',
 	        headers: { 'X-Requested-With': 'XMLHttpRequest' }
 	      })
