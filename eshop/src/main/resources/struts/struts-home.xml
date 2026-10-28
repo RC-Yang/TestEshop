@@ -3,7 +3,7 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
     "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-    <package name="home" extends="default" namespace="/home">
+    <package name="home" extends="json-default" namespace="/home">
         <!-- 
             這個 package（封裝作用域）名稱為 "home"，對應 /home 命名空間，
             用於處理首頁及相關功能的請求。
@@ -31,27 +31,9 @@
             <result name="login" type="redirect">/login.jsp</result>
         </action>
 
-        <!-- 
-            upload（檔案上傳）Action：
-            - URL 路徑：/home/upload
-            - 對應的類別：com.example.action.HomeAction
-            - 執行的方法：upload()
-            - 預設發生錯誤時導向 `/error.jsp`
-        -->
-        <action name="upload" class="com.example.action.HomeAction" method="upload">
-            <result>/error.jsp</result>
-        </action>
-
-        <!-- 
-            to_upload（跳轉到上傳畫面）Action：
-            - URL 路徑：/home/to_upload
-            - 對應的類別：com.example.action.HomeAction
-            - 執行的方法：toUpload()
-            - 成功時導向 `/WEB-INF/views/upload/upload.jsp`（上傳頁面）
-        -->
-        <action name="to_upload" class="com.example.action.HomeAction" method="toUpload">
-            <result name="success">/WEB-INF/views/upload/upload.jsp</result>
-        </action>
+        <action name="keepAlive" class="com.example.action.HomeAction" method="keepAlive">
+		    <result name="success" type="json" />
+		</action>
 
     </package>
 </struts>

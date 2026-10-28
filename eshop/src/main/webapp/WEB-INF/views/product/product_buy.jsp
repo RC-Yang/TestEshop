@@ -27,7 +27,7 @@
 				      'Content-Type': 'application/x-www-form-urlencoded',
 				      'X-Requested-With': 'XMLHttpRequest'
 				    },
-				    body: "prodId=<s:property value='productDetail[4]' />&userId=${session_user.loginId}&quantity="+document.getElementById('quantity').value
+				    body: "prodId="+<s:property value='productDetail[4]' />+"&userId="+${session_user.loginId}+"&quantity="+document.getElementById('quantity').value
 				  })
 				  .then((res)=>{return res.json();})
 				  
@@ -40,10 +40,6 @@
 				  .catch(() => {
 				    alert('加入購物車失敗，請稍後再試。');
 				  });
-				}
-				
-				function collect(){
-			
 				}
 		});
 	</script>
